@@ -3,7 +3,7 @@
         <v-layout>
             <div class="card-div-style">
                 <v-card :hover="true" class="estate-card" v-for="estate in estates">
-                    <router-link :to='helper + estate.id'>
+                    <router-link :to="'estate/' + estate.id">
                         <v-img
                                 src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
                                 height="150px"
@@ -38,8 +38,7 @@
         data() {
             return {
                 estatesAreFetched: false,
-                estates: [],
-                helper: 'estate/'
+                estates: []
             }
         },
         methods: {

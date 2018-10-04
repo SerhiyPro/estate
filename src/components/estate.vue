@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!--<p>estate  {{ $route.params.id }}</p>-->
         <v-layout style="margin-top: 20px">
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
@@ -12,7 +11,6 @@
                         <v-container fill-height fluid>
                             <v-layout fill-height>
                                 <v-flex xs12 align-end flexbox>
-                                    <!--<span class="headline">Квартира {{ estate.flat }}</span>-->
                                     <span class="headline">Квартира {{  estate.flat  }}</span>
                                 </v-flex>
                             </v-layout>
@@ -32,7 +30,7 @@
                         </div>
                     </v-card-title>
                     <v-card-actions>
-                        <v-btn flat color="orange">Edit</v-btn>
+                        <v-btn :to="$route.fullPath + '/edit'" flat color="orange">Edit</v-btn>
                         <v-btn flat color="orange">Delete</v-btn>
                         <div class="grey--text price"><i>{{  date  }}</i></div><br>
 
@@ -72,6 +70,7 @@
                     }
                 }).then(function (response) {
                     // Success
+                    console.log(this.$route.fullPath);
                     this.estate = response.body;
                     console.log(this.estate);
                     this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));

@@ -70,9 +70,9 @@ export default new Router({
             }
         },
         {
-            path: '/search',
-            name: 'search',
-            component: Search,
+            path: '/estate/:id/edit',
+            name: 'estate_edit',
+            component: EditAndAdd,
             beforeEnter: (to, from, next) => {
                 if (!localStorage.getItem('authorized') || localStorage.getItem('authorized') === 'null' ||
                     localStorage.getItem('authorized') === '') {
@@ -83,9 +83,22 @@ export default new Router({
             }
         },
         {
-            path: '/editAndAdd',
-            name: 'editAndAdd',
+            path: '/estates/add',
+            name: 'estate_add',
             component: EditAndAdd,
+            beforeEnter: (to, from, next) => {
+                if (!localStorage.getItem('authorized') || localStorage.getItem('authorized') === 'null' ||
+                    localStorage.getItem('authorized') === '') {
+                    next('/login');
+                } else {
+                    next();
+                }
+            }
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: Search,
             beforeEnter: (to, from, next) => {
                 if (!localStorage.getItem('authorized') || localStorage.getItem('authorized') === 'null' ||
                     localStorage.getItem('authorized') === '') {
