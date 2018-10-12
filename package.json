@@ -1,8 +1,8 @@
 {
-  "name": "adminka",
+  "name": "estates",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "vlad",
+  "author": "Serg",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -32,7 +32,7 @@
     "vue-select": "^2.4.0",
     "vue-top-progress": "^0.7.0",
     "vuejs-datepicker": "^0.9.11",
-    "vuetify": "^1.2.5"
+    "vuetify": "^1.2.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -83,19 +83,6 @@ export default new Router({
             }
         },
         {
-            path: '/estates/add',
-            name: 'estate_add',
-            component: EditAndAdd,
-            beforeEnter: (to, from, next) => {
-                if (!localStorage.getItem('authorized') || localStorage.getItem('authorized') === 'null' ||
-                    localStorage.getItem('authorized') === '') {
-                    next('/login');
-                } else {
-                    next();
-                }
-            }
-        },
-        {
             path: '/search',
             name: 'search',
             component: Search,

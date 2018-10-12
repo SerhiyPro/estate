@@ -31,9 +31,35 @@
                     </v-card-title>
                     <v-card-actions>
                         <v-btn :to="$route.fullPath + '/edit'" flat color="orange">Edit</v-btn>
-                        <v-btn flat color="orange">Delete</v-btn>
-                        <div class="grey--text price"><i>{{  date  }}</i></div><br>
+                        <v-dialog v-model="dialog" width="500">
+                            <v-btn flat color="orange" slot="activator">Delete</v-btn>
+                            <v-card>
+                                <v-card-title
+                                        class="headline grey lighten-2"
+                                        primary-title>Are you sure?
+                                </v-card-title>
 
+                                <v-card-text>
+                                    Those actions can not be undone, do you really want to delete that estate?
+                                </v-card-text>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                            color="green"
+                                            flat @click="dialog = false">Cancel
+                                    </v-btn>
+                                    <v-btn
+                                            color="red lighten-2"
+                                            flat @click="deleteEstate">I'm sure
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <div class="grey--text price"><i>{{ date }}</i></div>
+                        <br>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -51,7 +77,8 @@
         data() {
             return {
                 estate: {},
-                date: null
+                date: null,
+                dialog: false
             }
         },
         methods: {
@@ -70,10 +97,25 @@
                     }
                 }).then(function (response) {
                     // Success
-                    console.log(this.$route.fullPath);
                     this.estate = response.body;
-                    console.log(this.estate);
                     this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));
+                    // console.log(this.estates);
+                }).catch(error => {
+                    console.log(error)
+                });
+            },
+            deleteEstate() {
+                console.log('hello');
+                console.log(this.$route.fullPath.split('/')[2]);
+                this.dialog = false;
+                this.$http.delete('http://lab.kids-lu-server.xyz/api/v1/realty/' + this.$route.fullPath.split('/')[2], {
+                    headers: {
+                        'Authorization': localStorage.getItem('authorized'),
+                    }
+                }).then(function (response) {
+                    // Success
+                    console.log('successfully deleted');
+                    this.$router.push('/estates');
                     // console.log(this.estates);
                 }).catch(error => {
                     console.log(error)

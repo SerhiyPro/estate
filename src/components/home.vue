@@ -2,6 +2,7 @@
     <div>
         <p>Home page</p>
         <router-link to="estates">See all estates</router-link>
+
     </div>
 </template>
 
@@ -14,16 +15,15 @@
         name: 'home',
         data() {
             return {
-
-                }
+            }
         },
-        methods: {
-        },
+        methods: {},
         mounted() {
         },
         computed: {},
         watch: {},
-        created() {}
+        created() {
+        }
 
 
     }
