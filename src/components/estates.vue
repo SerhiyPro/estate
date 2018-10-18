@@ -1,32 +1,38 @@
 <template>
     <div class="main">
         <v-layout>
-            <label>utiuti<input v-model="search"></label>
+            <div v-if="loaded" style="width: 100%">
+                <div class="card-div-style" v-if="filteredEstates.length">
+                    <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates">
+                        <router-link :to="'estate/' + estate.id">
+                            <v-img
+                                    src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                                    height="150px"
+                                    aspect-ratio="2.75"
+                            ></v-img>
 
-            <div class="card-div-style">
-                <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates">
-                    <router-link :to="'estate/' + estate.id">
-                        <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-                                height="150px"
-                                aspect-ratio="2.75"
-                        ></v-img>
-
-                        <v-card-title primary-title>
-                            <div style="color: black">
-                                <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
-                                <p style="margin-top: 5px"><b>Поверх:</b> {{ estate.floor }} <br>
-                                    <b>Тип будинку:</b> {{ estate.housetype }} <br>
-                                    <b>Умеблювання:</b> {{ estate.furniture }} <br>
-                                    <b>Тип кімнат:</b> {{ estate.roomstype }}
-                                </p>
-                                <p>
-                                    <b>Розташування:</b> вул. {{ estate.street }}, {{ estate.city }}
-                                </p>
-                            </div>
-                        </v-card-title>
-                    </router-link>
-                </v-card>
+                            <v-card-title primary-title>
+                                <div style="color: black">
+                                    <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
+                                    <p style="margin-top: 5px"><b>Поверх:</b> {{ estate.floor }} <br>
+                                        <b>Тип будинку:</b> {{ estate.housetype }} <br>
+                                        <b>Умеблювання:</b> {{ estate.furniture }} <br>
+                                        <b>Тип кімнат:</b> {{ estate.roomstype }}
+                                    </p>
+                                    <p>
+                                        <b>Розташування:</b> вул. {{ estate.street }}, {{ estate.city }}
+                                    </p>
+                                </div>
+                            </v-card-title>
+                        </router-link>
+                    </v-card>
+                </div>
+                <div v-else style="text-align: center; width: 100%">
+                    Estate is not found, <router-link to="/estate/add/edit" class="custon-link"><strong>but you can add a new one</strong></router-link>
+                </div>
+            </div>
+            <div v-else>
+                Loading...
             </div>
         </v-layout>
     </div>
@@ -38,11 +44,12 @@
     export default {
         // components: {Popup, alert, DonutChart, LineChart, BubbleChart, MaterialInput, TopProgress, PopupEvent},
         name: 'estates',
-        // components: {VInput},
+        props: ['searchValue'],
         data() {
             return {
                 estatesAreFetched: false,
                 estates: [],
+                loaded: false,
                 search: ''
             }
         },
@@ -59,7 +66,10 @@
                     this.estatesAreFetched = true;
                     console.log(this.estates);
                 }).catch(error => {
-                    console.log(error)
+                    console.log(error);
+                    this.$parent.$parent.callAlert('Network error occured', 'danger');
+                }).finally(() => {
+                    this.loaded = true;
                 });
             },
         },
@@ -68,12 +78,14 @@
         computed: {
             filteredEstates() {
                 let estates = [],
-                    fieldsForSearch = ['city', 'name', 'description', 'housetype',
-                        'house', 'street', 'flat', 'flooring', 'layout', 'repair', 'roomtype', 'heating'];
+                    fieldsForSearch = ['city', 'name', 'description', 'housetype', 'furniture',
+                        'house', 'street', 'flat', 'flooring', 'layout', 'repair', 'roomstype', 'heating'];
+                console.log(this.searchValue);
                 estates = this.estates.filter(estate => {
                     for (let field of fieldsForSearch) {
                         if (estate[field]) {
-                            if (estate[field].toLowerCase().includes(this.search.toLowerCase())) {
+                            if (estate[field].toLowerCase().includes(this.$parent.search.toLowerCase())) {
+                            // if (estate[field].toLowerCase().includes(this.searchValue.toLowerCase())) {
                                 return true;
                             }
                         }
@@ -108,5 +120,9 @@
     .estate-card {
         width: 300px;
         margin: 5px;
+    }
+
+    .custon-link {
+        color: var( --header-color);
     }
 </style>

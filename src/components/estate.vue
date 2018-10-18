@@ -86,7 +86,7 @@
                 if (isFinite('0x' + this.$route.params.id))
                     console.log('is hex');
                 else {
-                    alert('is not hex');
+                    this.$parent.$parent.callAlert ('Incorrect id of estate');
                     this.$router.go(-1);
                 }
             },
@@ -101,7 +101,9 @@
                     this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));
                     // console.log(this.estates);
                 }).catch(error => {
-                    console.log(error)
+                    console.log(error);
+                    this.$parent.$parent.callAlert ('Incorrect id of estate', 'danger');
+                    this.$router.push('/');
                 });
             },
             deleteEstate() {
@@ -115,9 +117,11 @@
                 }).then(function (response) {
                     // Success
                     console.log('successfully deleted');
+                    this.$parent.$parent.callAlert ('Successfully deleted', 'success');
                     this.$router.push('/estates');
                     // console.log(this.estates);
                 }).catch(error => {
+                    this.$parent.$parent.callAlert ('Estate wasn\'t deleted', 'danger');
                     console.log(error)
                 });
             }

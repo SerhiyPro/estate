@@ -8,6 +8,7 @@ import router from './router'
 import VueMaterial from 'vue-material'
 
 // import 'vue-material/dist/theme/default.css'
+import './custom-directive/directives.js'
 
 import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.css'

@@ -9,10 +9,10 @@ Vue.directive('title', {
 
 Vue.directive('disable', {
     inserted: (el, binding) => {
-        if (!!binding.value) {
+        if (!!binding.value.disable) {
             el.disabled = true;
-            el.classList.add("lock-btn")
-             el.setAttribute('data-tooltip', 'this button disabled ');
+            el.classList.add("lock-btn");
+             el.setAttribute('data-tooltip',binding.value.value?binding.value.value:'this button is disabled');
         } else {
             el.disabled = false;
             el.classList.remove("lock-btn");
@@ -20,10 +20,10 @@ Vue.directive('disable', {
         }
     },
     componentUpdated: (el, binding) => {
-        if (!!binding.value) {
+        if (!!binding.value.disable) {
             el.disabled = true;
-            el.classList.add("lock-btn")
-            el.setAttribute('data-tooltip', 'this button disabled ');
+            el.classList.add("lock-btn");
+            el.setAttribute('data-tooltip',binding.value.value?binding.value.value:'this button is disabled');
         } else {
             el.disabled = false;
             el.classList.remove("lock-btn");
@@ -31,4 +31,4 @@ Vue.directive('disable', {
         }
     }
 
-})
+});

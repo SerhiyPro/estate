@@ -21,131 +21,139 @@
                                 :label="defaultRealtyUnit.description.label"
                                 :rules="defaultRealtyUnit.description.rules"
                         ></v-textarea>
-                        <select class="make-inline half-width" v-model="checks.checkedTypeOfTheHouse">
-                            <option :selected="true">Тип будинку</option>
-                            <option v-for="item in selects.housetype.items">{{item}}</option>
-                        </select>
-                        <select class="make-inline half-width" v-model="checks.checkedTypeOfRooms">
-                            <option :selected="true">Тип кімнат</option>
-                            <option v-for="item in selects.typeOfRooms.items">{{item}}</option>
-                        </select>
-                        <v-text-field
-                                class="make-inline half-width"
-                                v-model="estate.price"
-                                :label="defaultRealtyUnit.price.label"
-                                :type="defaultRealtyUnit.price.type"
-                                :rules="defaultRealtyUnit.price.rules"
-                                step="100"
-                        ></v-text-field>
-                        <select class="make-inline half-width" v-model="checks.checkedLayout">
-                            <option :selected="true">Планування</option>
-                            <option v-for="item in selects.layout.items">{{item}}</option>
-                        </select>
+                        <div class="inputs-group">
+                            <select v-model="checks.checkedTypeOfTheHouse">
+                                <option :selected="true">Тип будинку</option>
+                                <option v-for="item in selects.housetype.items">{{item}}</option>
+                            </select>
+                            <select v-model="checks.checkedTypeOfRooms">
+                                <option :selected="true">Тип кімнат</option>
+                                <option v-for="item in selects.typeOfRooms.items">{{item}}</option>
+                            </select>
+                            <v-text-field
+                                    class="make-inline half-width"
+                                    v-model="estate.price"
+                                    :label="defaultRealtyUnit.price.label"
+                                    :type="defaultRealtyUnit.price.type"
+                                    :rules="defaultRealtyUnit.price.rules"
+                                    step="100"
+                            ></v-text-field>
+                            <select style="margin-bottom: 19px;" v-model="checks.checkedLayout">
+                                <option :selected="true">Планування</option>
+                                <option v-for="item in selects.layout.items">{{item}}</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="info-block">
                         <div class="top-box">
                             <p>Адреса</p>
                         </div>
-                        <v-text-field
-                                class="make-inline half-width"
-                                v-model="estate.city"
-                                :counter="defaultRealtyUnit.city.counter"
-                                :type="defaultRealtyUnit.city.type"
-                                :label="defaultRealtyUnit.city.label"
-                                :rules="defaultRealtyUnit.city.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline half-width"
-                                v-model="estate.street"
-                                :counter="defaultRealtyUnit.street.counter"
-                                :type="defaultRealtyUnit.street.type"
-                                :label="defaultRealtyUnit.street.label"
-                                :rules="defaultRealtyUnit.street.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-bigger"
-                                v-model="estate.house"
-                                :counter="defaultRealtyUnit.house.counter"
-                                :type="defaultRealtyUnit.house.type"
-                                :label="defaultRealtyUnit.house.label"
-                                :rules="defaultRealtyUnit.house.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-bigger"
-                                v-model="estate.floor"
-                                :type="defaultRealtyUnit.floor.type"
-                                :label="defaultRealtyUnit.floor.label"
-                                :rules="defaultRealtyUnit.floor.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-smaller"
-                                v-model="estate.flat"
-                                :type="defaultRealtyUnit.flat.type"
-                                :label="defaultRealtyUnit.flat.label"
-                                :rules="defaultRealtyUnit.flat.rules"
-                        ></v-text-field>
+                        <div class="inputs-group">
+                            <v-text-field
+                                    class="half-width"
+                                    v-model="estate.city"
+                                    :counter="defaultRealtyUnit.city.counter"
+                                    :type="defaultRealtyUnit.city.type"
+                                    :label="defaultRealtyUnit.city.label"
+                                    :rules="defaultRealtyUnit.city.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="half-width"
+                                    v-model="estate.street"
+                                    :counter="defaultRealtyUnit.street.counter"
+                                    :type="defaultRealtyUnit.street.type"
+                                    :label="defaultRealtyUnit.street.label"
+                                    :rules="defaultRealtyUnit.street.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.house"
+                                    :counter="defaultRealtyUnit.house.counter"
+                                    :type="defaultRealtyUnit.house.type"
+                                    :label="defaultRealtyUnit.house.label"
+                                    :rules="defaultRealtyUnit.house.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.floor"
+                                    :type="defaultRealtyUnit.floor.type"
+                                    :label="defaultRealtyUnit.floor.label"
+                                    :rules="defaultRealtyUnit.floor.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.flat"
+                                    :type="defaultRealtyUnit.flat.type"
+                                    :label="defaultRealtyUnit.flat.label"
+                                    :rules="defaultRealtyUnit.flat.rules"
+                            ></v-text-field>
+                        </div>
                     </div>
                     <div class="info-block">
                         <div class="top-box">
                             <p>Кімнати</p>
                         </div>
-                        <v-text-field
-                                class="make-inline half-width"
-                                v-model="estate.rooms"
-                                :type="defaultRealtyUnit.rooms.type"
-                                :label="defaultRealtyUnit.rooms.label"
-                                :rules="defaultRealtyUnit.rooms.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline half-width"
-                                v-model="estate.height"
-                                step="0.1"
-                                :type="defaultRealtyUnit.height.type"
-                                :label="defaultRealtyUnit.height.label"
-                                :rules="defaultRealtyUnit.height.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-bigger"
-                                v-model="estate.areaall"
-                                :type="defaultRealtyUnit.areaall.type"
-                                :label="defaultRealtyUnit.areaall.label"
-                                :rules="defaultRealtyUnit.areaall.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-bigger"
-                                v-model="estate.areakitchen"
-                                :type="defaultRealtyUnit.areakitchen.type"
-                                :label="defaultRealtyUnit.areakitchen.label"
-                                :rules="defaultRealtyUnit.areakitchen.rules"
-                        ></v-text-field>
-                        <v-text-field
-                                class="make-inline third-width-smaller"
-                                v-model="estate.arearooms"
-                                :type="defaultRealtyUnit.arearooms.type"
-                                :label="defaultRealtyUnit.arearooms.label"
-                                :rules="defaultRealtyUnit.arearooms.rules"
-                        ></v-text-field>
+                        <div class="inputs-group">
+                            <v-text-field
+                                    class="half-width"
+                                    v-model="estate.rooms"
+                                    :type="defaultRealtyUnit.rooms.type"
+                                    :label="defaultRealtyUnit.rooms.label"
+                                    :rules="defaultRealtyUnit.rooms.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="half-width"
+                                    v-model="estate.height"
+                                    step="0.1"
+                                    :type="defaultRealtyUnit.height.type"
+                                    :label="defaultRealtyUnit.height.label"
+                                    :rules="defaultRealtyUnit.height.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.areaall"
+                                    :type="defaultRealtyUnit.areaall.type"
+                                    :label="defaultRealtyUnit.areaall.label"
+                                    :rules="defaultRealtyUnit.areaall.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.areakitchen"
+                                    :type="defaultRealtyUnit.areakitchen.type"
+                                    :label="defaultRealtyUnit.areakitchen.label"
+                                    :rules="defaultRealtyUnit.areakitchen.rules"
+                            ></v-text-field>
+                            <v-text-field
+                                    class="third-width"
+                                    v-model="estate.arearooms"
+                                    :type="defaultRealtyUnit.arearooms.type"
+                                    :label="defaultRealtyUnit.arearooms.label"
+                                    :rules="defaultRealtyUnit.arearooms.rules"
+                            ></v-text-field>
+                        </div>
                     </div>
                     <div class="info-block" style="padding-top: 30px; padding-bottom: 30px">
                         <div class="top-box">
                             <p>Додатково</p>
                         </div>
-                        <select class="make-inline half-width" v-model="checks.checkedFurniture">
-                            <option :selected="true">Меблі</option>
-                            <option v-for="item in selects.furniture.items">{{item}}</option>
-                        </select>
-                        <select class="make-inline half-width" v-model="checks.checkedFlooring">
-                            <option :selected="true">Тип підлоги</option>
-                            <option v-for="item in selects.flooring.items">{{item}}</option>
-                        </select>
-                        <select class="make-inline half-width" style="margin-top: 30px" v-model="checks.checkedHeating">
-                            <option :selected="true">Вид опалення</option>
-                            <option v-for="item in selects.heating.items">{{item}}</option>
-                        </select>
-                        <select class="make-inline half-width" v-model="checks.checkedRepair">
-                            <option :selected="true">Ремонт</option>
-                            <option v-for="item in selects.repair.items">{{item}}</option>
-                        </select>
+                        <div class="inputs-group">
+                            <select v-model="checks.checkedFurniture">
+                                <option :selected="true">Меблі</option>
+                                <option v-for="item in selects.furniture.items">{{item}}</option>
+                            </select>
+                            <select v-model="checks.checkedFlooring">
+                                <option :selected="true">Тип підлоги</option>
+                                <option v-for="item in selects.flooring.items">{{item}}</option>
+                            </select>
+                            <select style="margin-top: 30px" v-model="checks.checkedHeating">
+                                <option :selected="true">Вид опалення</option>
+                                <option v-for="item in selects.heating.items">{{item}}</option>
+                            </select>
+                            <select v-model="checks.checkedRepair">
+                                <option :selected="true">Ремонт</option>
+                                <option v-for="item in selects.repair.items">{{item}}</option>
+                            </select>
+                        </div>
                     </div>
                     <v-btn v-if="this.$route.path.split('/')[2] === 'add'" class="button-margin" type="submit"
                            color="success">Створити
@@ -342,7 +350,7 @@
                         this.fillEstateObject(response);
                         this.fillChecks(response);
                     }).catch(error => {
-                        alert('Incorrect id of estate');
+                        this.$parent.$parent.callAlert('Incorrect id of festate', 'danger');
                         this.$router.go(-1);
                         console.log(error);
                     });
@@ -370,10 +378,10 @@
                     .then(function (response) {
                         // Success
                         console.log(response);
-                        alert('Estate was successfully created');
+                        this.$parent.$parent.callAlert('Estate was successfully created', 'success');
                         this.$router.push('/estates');
                     }).catch(error => {
-                    alert('Estate wasn\'t created');
+                    this.$parent.$parent.callAlert('There was some troubles with creating new estate', 'danger');
                     console.log(error);
                 });
             },
@@ -388,6 +396,7 @@
                         console.log(response);
                         this.$router.push('/estates');
                     }).catch(error => {
+                    this.$parent.$parent.callAlert('There was some troubles with editing estate', 'danger');
                     console.log(error);
                 });
             },
@@ -478,9 +487,19 @@
 </script>
 
 <style scoped>
+    .inputs-group {
+        flex-wrap: wrap;
+        display: flex;
+    }
 
-    .make-inline {
-        display: inline-block;
+    .inputs-group > select {
+        flex: 1 1 250px;
+        margin: 0 5px;
+    }
+
+    .half-width {
+        flex: 1 1 250px;
+        margin: 0 5px;
     }
 
     .top-box {
@@ -504,17 +523,11 @@
         border: 1px solid var(--border-title-color);
     }
 
-    .half-width {
-        width: 49.5%;
+    .third-width{
+        margin: 0 5px;
+        flex: 1 1 150px;
     }
 
-    .third-width-bigger {
-        width: 33%;
-    }
-
-    .third-width-smaller {
-        width: 32%;
-    }
 
     .button-margin {
         margin-left: 20px;
