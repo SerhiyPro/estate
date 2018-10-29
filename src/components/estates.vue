@@ -1,18 +1,19 @@
 <template>
-    <div class="main">
+    <div>
+        <advanced-search v-on:advSearch="advancedSearch"></advanced-search>
         <v-layout>
             <div v-if="loaded" style="width: 100%">
                 <div class="card-div-style" v-if="filteredEstates.length">
                     <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates">
                         <router-link :to="'estate/' + estate.id">
                             <v-img
-                                    src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                                    :src="estatesImages[`0x${estate.id}`%10]"
                                     height="150px"
                                     aspect-ratio="2.75"
                             ></v-img>
 
                             <v-card-title primary-title>
-                                <div style="color: black">
+                                <div style="color: #000000">
                                     <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
                                     <p style="margin-top: 5px"><b>Поверх:</b> {{ estate.floor }} <br>
                                         <b>Тип будинку:</b> {{ estate.housetype }} <br>
@@ -28,7 +29,9 @@
                     </v-card>
                 </div>
                 <div v-else style="text-align: center; width: 100%">
-                    Estate is not found, <router-link to="/estate/add/edit" class="custon-link"><strong>but you can add a new one</strong></router-link>
+                    Estate is not found,
+                    <router-link to="/estate/add/edit" class="custon-link"><strong>but you can add a new one</strong>
+                    </router-link>
                 </div>
             </div>
             <div v-else>
@@ -39,23 +42,27 @@
 </template>
 
 <script>
-    // import Popup from './custom-components/popup.vue'
-    // import VInput from "vuetify/src/components/VInput/VInput";
+    import advancedSearch from './advSearch';
+    import {estates} from "../assets/images";
+
     export default {
-        // components: {Popup, alert, DonutChart, LineChart, BubbleChart, MaterialInput, TopProgress, PopupEvent},
+        components: {advancedSearch},
         name: 'estates',
         props: ['searchValue'],
         data() {
             return {
                 estatesAreFetched: false,
                 estates: [],
+                estatesImages: estates,
                 loaded: false,
-                search: ''
+                search: '',
+                params: {},
+                isAdvancedSearch: false
             }
         },
         methods: {
             fetchTheData() {
-                this.$http.get('http://lab.kids-lu-server.xyz/api/v1/realty', {
+                this.$http.get(`${this.$root.apiUrl}/realty`, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
@@ -64,38 +71,65 @@
 
                     this.estates = response.data.list;
                     this.estatesAreFetched = true;
-                    console.log(this.estates);
+                    // console.log(this.estates); // to check whether data was correct
                 }).catch(error => {
                     console.log(error);
-                    this.$parent.$parent.callAlert('Network error occured', 'danger');
+                    this.$root.callAlert('Проблема з\'єднання з сервером', 'danger');
                 }).finally(() => {
                     this.loaded = true;
                 });
             },
+            advancedSearch(params) {
+                this.params = params;
+                this.isAdvancedSearch = true;
+            }
         },
         mounted() {
         },
         computed: {
             filteredEstates() {
-                let estates = [],
-                    fieldsForSearch = ['city', 'name', 'description', 'housetype', 'furniture',
-                        'house', 'street', 'flat', 'flooring', 'layout', 'repair', 'roomstype', 'heating'];
-                console.log(this.searchValue);
-                estates = this.estates.filter(estate => {
-                    for (let field of fieldsForSearch) {
-                        if (estate[field]) {
-                            if (estate[field].toLowerCase().includes(this.$parent.search.toLowerCase())) {
-                            // if (estate[field].toLowerCase().includes(this.searchValue.toLowerCase())) {
-                                return true;
+                let estates = [];
+                let fieldsForSearch = ['city', 'name', 'description', 'housetype', 'furniture',
+                    'house', 'street', 'flat', 'flooring', 'layout', 'repair', 'roomstype', 'heating'];
+
+                if (this.isAdvancedSearch) {
+                    estates = this.estates.filter(estate => {
+                        for (let field of Object.keys(this.params)) {
+                            if (estate[field] && this.params[field]) {
+                                if (typeof (estate[field]) !== 'number') {
+                                    if (!estate[field].toLowerCase().includes(this.params[field].toLowerCase())) {
+                                        return false;
+                                    }
+                                }
+                                else if (!(estate[field] === +this.params[field])) {
+                                    return false;
+                                }
                             }
                         }
-                    }
-                    return false;
-                });
+                        return true;
+                    });
+                } else {
+                    estates = this.estates.filter(estate => {
+                        for (let field of fieldsForSearch) {
+                            if (estate[field]) {
+                                if (estate[field].toLowerCase().includes(this.search.toLowerCase())) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+                }
                 return estates;
+
             }
         },
-        watch: {},
+        watch: {
+            searchValue() {
+                this.isAdvancedSearch = false;
+                this.search = this.searchValue;
+            }
+        },
         created() {
             this.fetchTheData();
         }
@@ -103,9 +137,6 @@
 </script>
 
 <style scoped>
-    .main {
-        margin-top: 30px;
-    }
 
     a:link {
         text-decoration: none;
@@ -123,6 +154,6 @@
     }
 
     .custon-link {
-        color: var( --header-color);
+        color: var(--header-color);
     }
 </style>

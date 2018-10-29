@@ -3,13 +3,21 @@
         <v-app id="inspire">
             <v-layout row>
                 <v-flex>
-                    <v-card-title class="blue" style="height: 70px">
-                        <router-link to="/" style="text-decoration: none"><span class="headline">Home</span></router-link>
+                    <v-card-title class="blue header">
+                        <router-link to="/" style="text-decoration: none;">
+                            <span class="link-text">Д</span>
+                        </router-link>
+                        <router-link to="/" style="text-decoration: none;">
+                            <img class="logo" src="../assets/images/logo.png">
+                        </router-link>
+                        <router-link to="/" style="text-decoration: none;">
+                            <span class="link-text">одому</span>
+                        </router-link>
                         <v-spacer></v-spacer>
-                        <v-form  @click.prevent="">
+                        <v-form @click.prevent="">
                             <v-text-field
                                     v-model="search"
-                                    label="Search"
+                                    label="Пошук"
                             ></v-text-field>
                         </v-form>
                         <v-menu bottom left>
@@ -32,30 +40,31 @@
                 </v-flex>
             </v-layout>
         </v-app>
-        <estates :search-value="search"></estates>
-        <router-view></router-view>
+        <router-view :search-value="['/','/estates'].includes($route.path)? search: ''"></router-view>
     </div>
 </template>
 
 <script>
 
-    // import Popup from './custom-components/popup.vue'
     export default {
-        // components: {Popup, alert, DonutChart, LineChart, BubbleChart, MaterialInput, TopProgress, PopupEvent},
         name: 'home',
         data() {
             return {
                 search: '',
                 menuOptions: [
-                    {title: 'See all estates', call: 'seeAllEstates'},
-                    {title: 'Add new estate', call: 'addNewEstate'},
-                    {title: 'Log out', call: 'logOut'}
+                    {title: 'Додому', call: 'goHome'},
+                    {title: 'Перегляд усієї нерухомісті', call: 'seeAllEstates'},
+                    {title: 'Додати нову будівлю', call: 'addNewEstate'},
+                    {title: 'Вийти', call: 'logOut'}
                 ],
             }
         },
         methods: {
             goTo(item) {
                 this[item.call]();
+            },
+            goHome() {
+                this.$router.push('/');
             },
             seeAllEstates() {
                 this.$router.push('/estates');
@@ -72,8 +81,8 @@
         },
         computed: {},
         watch: {
-            search: function () {
-                if(this.search.length >= 3) {
+            search() {
+                if (this.search.length >= 3) {
                     this.$router.push('/estates');
                 }
             }
@@ -86,6 +95,14 @@
 </script>
 
 <style scoped>
+    .logo {
+        height: 50px;
+        width: 50px;
+        /*margin-left: 20px;*/
+    }
 
-
+    .link-text {
+        color: white;
+        font-size: 20px;
+    }
 </style>

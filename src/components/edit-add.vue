@@ -158,7 +158,7 @@
                     <v-btn v-if="this.$route.path.split('/')[2] === 'add'" class="button-margin" type="submit"
                            color="success">Створити
                     </v-btn>
-                    <v-btn v-else class="button-margin" type="submit" color="success">Редагувати</v-btn>
+                    <v-btn v-else class="button-margin" type="submit" flat color="orange">Редагувати</v-btn>
                 </v-form>
             </v-card>
         </v-flex>
@@ -341,7 +341,7 @@
                 console.log(this.$route.path.split('/')[2]);
                 if (this.$route.path.split('/')[2] !== 'add') {
                     console.log('editing ' + this.$route.path.split('/')[2]);
-                    this.$http.get('http://lab.kids-lu-server.xyz/api/v1/realty/' + this.$route.path.split('/')[2], {
+                    this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], {
                         headers: {
                             'Authorization': localStorage.getItem('authorized'),
                         }
@@ -350,7 +350,7 @@
                         this.fillEstateObject(response);
                         this.fillChecks(response);
                     }).catch(error => {
-                        this.$parent.$parent.callAlert('Incorrect id of festate', 'danger');
+                        this.$root.callAlert('Неправильна адреса будівлі', 'danger');
                         this.$router.go(-1);
                         console.log(error);
                     });
@@ -370,7 +370,7 @@
                 }
             },
             addEstate() {
-                this.$http.post('http://lab.kids-lu-server.xyz/api/v1/realty', this.estate, {
+                this.$http.post(`${this.$root.apiUrl}/realty`, this.estate, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
@@ -378,25 +378,26 @@
                     .then(function (response) {
                         // Success
                         console.log(response);
-                        this.$parent.$parent.callAlert('Estate was successfully created', 'success');
+                        this.$root.callAlert('Будівля успішно створена', 'success');
                         this.$router.push('/estates');
                     }).catch(error => {
-                    this.$parent.$parent.callAlert('There was some troubles with creating new estate', 'danger');
+                    this.$root.callAlert('Сталась помилка', 'danger');
                     console.log(error);
                 });
             },
             editEstate() {
-                this.$http.put('http://lab.kids-lu-server.xyz/api/v1/realty/' + this.$route.path.split('/')[2], this.estate, {
+                this.$http.put(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], this.estate, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
                 })
                     .then(function (response) {
                         // Success
-                        console.log(response);
+
+                        this.$root.callAlert('Будівля успішно відредагована', 'success');
                         this.$router.push('/estates');
                     }).catch(error => {
-                    this.$parent.$parent.callAlert('There was some troubles with editing estate', 'danger');
+                    this.$root.callAlert('Сталась помилка', 'danger');
                     console.log(error);
                 });
             },

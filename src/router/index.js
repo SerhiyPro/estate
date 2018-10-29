@@ -5,7 +5,7 @@ import Home from '@/components/home'
 import Login from '@/components/login'
 import Estates from '@/components/estates'
 import Estate from '@/components/estate'
-import Search from '@/components/advSearch'
+import homeContent from '@/components/home-content'
 import EditAndAdd from '@/components/edit-add'
 
 import VueLocalStorage from 'vue-localstorage'
@@ -25,7 +25,7 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    component: Estates
+                    component: homeContent
                 },
                 {
                     path: 'estates',
@@ -41,11 +41,6 @@ export default new Router({
                     path: '/estate/:id/edit',
                     name: 'estate_edit',
                     component: EditAndAdd
-                },
-                {
-                    path: '/search',
-                    name: 'search',
-                    component: Search
                 }
             ],
             alias: 'estates',

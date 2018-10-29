@@ -6,7 +6,7 @@
                     <v-img
                             class="white--text"
                             height="350px"
-                            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                            :src="estates[`0x${estate.id}`%10]"
                     >
                         <v-container fill-height fluid>
                             <v-layout fill-height>
@@ -18,8 +18,8 @@
                     </v-img>
                     <v-card-title>
                         <div style="padding-left: 5px; font-size: 15px">
-                            <span><b>Поверх:</b> {{ estate.floor }}<br>
-                            <b>Тип будинку:</b> {{ estate.housetype }}<br>
+                            <span v-if="estate.floor"><b>Поверх:</b> {{ estate.floor }}<br></span>
+                            <span><b>Тип будинку:</b> {{ estate.housetype }}<br>
                             <b>Площа квартири:</b> {{ estate.arearooms }} м<sup>2</sup><br>
                             <b>Умеблювання:</b> {{ estate.furniture }}<br>
                             <b>Кількість кімнат:</b> {{ estate.rooms }}<br>
@@ -30,17 +30,17 @@
                         </div>
                     </v-card-title>
                     <v-card-actions>
-                        <v-btn :to="$route.fullPath + '/edit'" flat color="orange">Edit</v-btn>
+                        <v-btn :to="$route.fullPath + '/edit'" flat color="orange">Редагувати</v-btn>
                         <v-dialog v-model="dialog" width="500">
-                            <v-btn flat color="orange" slot="activator">Delete</v-btn>
+                            <v-btn flat color="red" slot="activator">Видалити</v-btn>
                             <v-card>
                                 <v-card-title
                                         class="headline grey lighten-2"
-                                        primary-title>Are you sure?
+                                        primary-title>Продовжити?
                                 </v-card-title>
 
                                 <v-card-text>
-                                    Those actions can not be undone, do you really want to delete that estate?
+                                    Видалену будівлю неможливо буде відновити..
                                 </v-card-text>
 
                                 <v-divider></v-divider>
@@ -49,11 +49,11 @@
                                     <v-spacer></v-spacer>
                                     <v-btn
                                             color="green"
-                                            flat @click="dialog = false">Cancel
+                                            flat @click="dialog = false">Ні
                                     </v-btn>
                                     <v-btn
                                             color="red lighten-2"
-                                            flat @click="deleteEstate">I'm sure
+                                            flat @click="deleteEstate">Так
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
@@ -68,14 +68,13 @@
 </template>
 
 <script>
-
-    // import Popup from './custom-components/popup.vue'
+    import {estates} from "../assets/images";
 
     export default {
-        // components: {Popup, alert, DonutChart, LineChart, BubbleChart, MaterialInput, TopProgress, PopupEvent},
         name: 'estate',
         data() {
             return {
+                estates,
                 estate: {},
                 date: null,
                 dialog: false
@@ -86,12 +85,12 @@
                 if (isFinite('0x' + this.$route.params.id))
                     console.log('is hex');
                 else {
-                    this.$parent.$parent.callAlert ('Incorrect id of estate');
+                    this.$root.callAlert ('Некоректна адреса');
                     this.$router.go(-1);
                 }
             },
             fetchDataAboutGivenEstate() {
-                this.$http.get('http://lab.kids-lu-server.xyz/api/v1/realty/' + this.$route.params.id, {
+                this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.params.id, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
@@ -102,26 +101,23 @@
                     // console.log(this.estates);
                 }).catch(error => {
                     console.log(error);
-                    this.$parent.$parent.callAlert ('Incorrect id of estate', 'danger');
+                    this.$root.callAlert ('Неіснуюча будівля', 'danger');
                     this.$router.push('/');
                 });
             },
             deleteEstate() {
-                console.log('hello');
-                console.log(this.$route.fullPath.split('/')[2]);
                 this.dialog = false;
-                this.$http.delete('http://lab.kids-lu-server.xyz/api/v1/realty/' + this.$route.fullPath.split('/')[2], {
+                this.$http.delete(`${this.$root.apiUrl}/realty/` + this.$route.fullPath.split('/')[2], {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
                 }).then(function (response) {
                     // Success
-                    console.log('successfully deleted');
-                    this.$parent.$parent.callAlert ('Successfully deleted', 'success');
+                    this.$root.callAlert ('Успішно видалено', 'success');
                     this.$router.push('/estates');
                     // console.log(this.estates);
                 }).catch(error => {
-                    this.$parent.$parent.callAlert ('Estate wasn\'t deleted', 'danger');
+                    this.$root.callAlert ('Будівля не була видалена, сталась помилка', 'danger');
                     console.log(error)
                 });
             }

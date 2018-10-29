@@ -6,7 +6,7 @@
                     <v-container fill-height fluid>
                         <v-layout fill-height>
                             <v-flex xs12 align-end flexbox>
-                                <span class="headline">Top Estates for sale</span>
+                                <span class="headline">Нерухомість на продаж</span>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -17,21 +17,21 @@
                             <v-text-field
                                     v-model="authorization.login"
                                     type="text"
-                                    label="Login"
+                                    label="Логін"
                                     :rules="rules.login"
                             ></v-text-field>
                             <v-text-field
                                     v-model="authorization.pass"
                                     type="password"
-                                    label="Password"
+                                    label="Пароль"
                                     :rules="rules.pass"
                             ></v-text-field>
                             </v-form>
 
                     </v-card-title>
                     <v-card-actions class="login-buttons">
-                        <v-btn flat color="orange" type="submit" @click.prevent="submit">Login</v-btn>
-                        <v-btn flat color="orange"  v-disable="{disable:true,value:'comming soon'}"><i>Register</i></v-btn>
+                        <v-btn flat color="orange" type="submit" @click.prevent="submit">Авторизуватись</v-btn>
+                        <v-btn flat color="orange"  v-disable="{disable:true,value:'Найближчим часом'}"><i>Зареєструватись</i></v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -51,12 +51,12 @@
                 },
                 rules: {
                     login: [
-                        v => !!v || 'Login is required',
-                        v => v.length <= 100 || 'Name must be less than 100 characters'
+                        v => !!v || 'Логін необхідний',
+                        v => v.length <= 100 || 'Логін не повинен бути довшим за 100 символів'
                     ],
                     pass: [
-                        v => !!v || 'Password is required',
-                        v => v.length <= 100 || 'Name must be less than 100 characters'
+                        v => !!v || 'Пароль необхідний',
+                        v => v.length <= 100 || 'Пароль не повинен бути довшим за 100 символів'
                     ]
                 }
             }
@@ -65,9 +65,8 @@
             submit() {
                 if (this.$refs.form.validate()) {
                     localStorage.removeItem('authorized');
-                    console.log(this.authorization.login + " " + this.authorization.pass);
                     let auth = 'Basic ' + new Buffer(this.authorization.login + ':' + this.authorization.pass).toString('base64');
-                    this.$http.get('http://lab.kids-lu-server.xyz/api/v1/realty', {
+                    this.$http.get(`${this.$root.apiUrl}/realty`, {
                         headers: {
                             'Authorization': auth,
                         }
@@ -76,12 +75,11 @@
                         localStorage.setItem('authorized', auth);
                         this.$router.push('/');
                     }).catch(error => {
-                        console.log(error);
-                        this.$parent.callAlert('Incorrect login or password', 'danger');
+                        this.$root.callAlert('Неправильний логін чи пароль', 'danger');
                     });
                 }
                 else {
-                    this.$parent.callAlert('Enter both login and password', 'danger');
+                    this.$root.callAlert('Введіть і логін, і пароль', 'danger');
                 }
             }
         },
@@ -106,7 +104,7 @@
     }
 
     .image {
-        background-image: url(http://estatesat32nd.com/images/parallax/home_res9.jpg);
+        background-image: url("../assets/images/estates/estate-3.jpg");
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;

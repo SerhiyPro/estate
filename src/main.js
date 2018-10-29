@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import Vuetify from 'vuetify'
+import sh from 'shuffle-array';
 
 import App from './App'
 import router from './router'
@@ -43,18 +44,38 @@ Vue.use(Vuetify, {
     }
 });
 
-new Vue({
+Array.prototype.shuffle = function() {
+    return sh(this);
+};
+Array.prototype.picker = function (num) {
+    return sh.pick(this, {'picks': num});
+};
 
+new Vue({
 
     el: '#app',
     router,
     data: {
         title: 'This will be the title',
-        baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8008',
+        apiUrl:'http://lab.kids-lu-server.xyz/api/v1',
+        alerts: []
     },
     template: '<App/>',
     components: {
         App
     },
-    methods: {}
+    methods: {
+        callAlert(text, type) {
+            this.alerts.push({
+                showAlert: true,
+                text,
+                type,
+                timeoutId: setTimeout(() => {
+                    clearTimeout(this.alerts[0].timeoutId);
+                    this.alerts.shift();
+                }, 5000)
+            });
+
+        }
+    }
 });

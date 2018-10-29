@@ -1,22 +1,9 @@
 <template>
     <div class="wrapper">
         <div class="content">
-            <!--<header>-->
-            <!--<router-link to="/">-->
-            <!--<h2>Estate Seller</h2>-->
-            <!--</router-link>-->
-            <!--<router-link to="/estate/add/edit">-->
-            <!--Add new estate-->
-            <!--</router-link>-->
-            <!--<button @click="logOut" style="">Log out</button>-->
-
-            <!--</header>-->
-            <!--<button @click="callAlert" style="width: 200px">-->
-            <!--Click me)-->
-            <!--</button>-->
-            <alert v-for="(alert,index) in alerts" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
+            <alert v-for="(alert,index) in $root.alerts" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
                    :withCloseBtn="true">
-                <span>{{ errorMessage }}</span>
+                <span>{{ alert.text }}</span>
             </alert>
             <router-view></router-view>
         </div>
@@ -37,31 +24,12 @@
         router,
         data() {
             return {
-                title: 'Home',
-                alerts: []
+                title: 'Home'
             }
         },
         mounted() {
         },
-        methods: {
-            callAlert(message, type) {
-                this.errorMessage = message;
-                this.showAlert = true;
-                let temp = Math.floor(Math.random() * 1000);
-                this.alerts.push({
-                    showAlert: true,
-                    text: `success ${temp}`,
-                });
-                let length = this.alerts.length;
-                // this.alerts[length - 1].type = 'success';
-                // this.alerts[length - 1].type = 'danger';
-                this.alerts[length - 1].type = type;
-                setTimeout(() => {
-                    this.alerts.splice(0, 1)
-
-                }, 5000)
-            },
-        },
+        methods: {},
         created() {
         }
 
@@ -72,7 +40,6 @@
 <style>
 
     :root {
-        --header-height: 60px;
         /*--header-bg-color: #286090;*/
         --main-bg-color: #fafafa;
         --side-bg-color: #5a618e;
@@ -85,11 +52,25 @@
         --bg-color-card-admin: #b8b8b938;
         --border-title-color: #000;
         --header-color: #2196f3;
+        --header-height: 70px;
+    }
+
+    .v-text-field.v-input--is-focused .v-input__slot:after {
+        color: var(--header-color);
+    }
+
+    .header .v-text-field.v-input--is-focused .v-input__slot:after {
+        color: white;
+    }
+
+    .header {
+        height: var(--header-height);
     }
 
     select {
         outline: none;
     }
+
     .application--wrap .v-text-field__slot > input {
         color: white !important;
     }
