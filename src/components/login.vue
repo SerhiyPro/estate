@@ -12,7 +12,6 @@
                     </v-container>
 
                     <v-card-title>
-
                             <v-form class="inputs" ref="form" :v-model="isValid" @submit.prevent="submit">
                             <v-text-field
                                     v-model="authorization.login"
@@ -31,7 +30,7 @@
                     </v-card-title>
                     <v-card-actions class="login-buttons">
                         <v-btn flat color="orange" type="submit" @click.prevent="submit">Авторизуватись</v-btn>
-                        <v-btn flat color="orange"  v-disable="{disable:true,value:'Найближчим часом'}"><i>Зареєструватись</i></v-btn>
+                        <v-btn flat color="orange"  v-disable="{disable:true,value:'Найближчим часом'}">Зареєструватись</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -83,6 +82,9 @@
                 }
             }
         },
+        mounted() {
+            document.title = "Login";
+        }
     }
 </script>
 

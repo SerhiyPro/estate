@@ -40,7 +40,6 @@
 <style>
 
     :root {
-        /*--header-bg-color: #286090;*/
         --main-bg-color: #fafafa;
         --side-bg-color: #5a618e;
         --side-text-color-small: #454242;
@@ -119,6 +118,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+        font-size: 16px;
     }
 
     h2 {
@@ -139,5 +139,11 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+    }
+
+    .VueCarousel-slide {
+        position: relative;
+        min-height: 100px;
+        text-align: center;
     }
 </style>

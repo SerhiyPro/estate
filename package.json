@@ -21,6 +21,7 @@
     "vue": "^2.3.3",
     "vue-base64-file-upload": "^1.0.4",
     "vue-base64-upload": "^1.0.1",
+    "vue-carousel": "^0.16.0-rc1",
     "vue-chartjs": "^3.3.2",
     "vue-cookies": "^1.5.4",
     "vue-file-base64": "^1.0.2",
@@ -32,6 +33,7 @@
     "vue-router": "^2.6.0",
     "vue-select": "^2.4.0",
     "vue-top-progress": "^0.7.0",
+    "vue2-google-maps": "^0.10.2",
     "vuejs-datepicker": "^0.9.11",
     "vuetify": "^1.2.6"
   },

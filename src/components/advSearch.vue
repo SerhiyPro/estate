@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div @click="show = !show" class="adv-search" style="cursor: pointer;">
+        <section @click="show = !show" class="adv-search" style="cursor: pointer;">
             <div class="top-box">
                 <p>Розширений пошук</p>
             </div>
             <img src="http://lessonpix.com/drawings/168/100x100/Gray+Triangle.png"
                  class="triangle">
             <transition name="slide-fade">
-                <div @click.stop="" v-if="show" class="internal-block" style="cursor: auto;">
+                <section @click.stop="" v-if="show" class="internal-block" style="cursor: auto;">
                     <div class="info-block">
                         <v-text-field
                                 class="input-margin"
@@ -116,9 +116,9 @@
                             ></v-text-field>
                         </div>
                     </div>
-                </div>
+                </section>
             </transition>
-        </div>
+        </section>
     </div>
 </template>
 

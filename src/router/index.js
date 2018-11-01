@@ -22,6 +22,9 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Home,
+            meta: {
+                title: 'Home Page - Example App'
+            },
             children: [
                 {
                     path: '',

@@ -11,7 +11,7 @@
                             <img class="logo" src="../assets/images/logo.png">
                         </router-link>
                         <router-link to="/" style="text-decoration: none;">
-                            <span class="link-text">одому</span>
+                            <span class="link-text">дому</span>
                         </router-link>
                         <v-spacer></v-spacer>
                         <v-form @click.prevent="">
@@ -98,7 +98,6 @@
     .logo {
         height: 50px;
         width: 50px;
-        /*margin-left: 20px;*/
     }
 
     .link-text {

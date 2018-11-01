@@ -2,7 +2,7 @@
     <div>
         <advanced-search v-on:advSearch="advancedSearch"></advanced-search>
         <v-layout>
-            <div v-if="loaded" style="width: 100%">
+            <section v-if="loaded" style="width: 100%">
                 <div class="card-div-style" v-if="filteredEstates.length">
                     <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates">
                         <router-link :to="'estate/' + estate.id">
@@ -28,15 +28,15 @@
                         </router-link>
                     </v-card>
                 </div>
-                <div v-else style="text-align: center; width: 100%">
+                <section v-else style="text-align: center; width: 100%">
                     Estate is not found,
                     <router-link to="/estate/add/edit" class="custon-link"><strong>but you can add a new one</strong>
                     </router-link>
-                </div>
-            </div>
-            <div v-else>
+                </section>
+            </section>
+            <section v-else>
                 Loading...
-            </div>
+            </section>
         </v-layout>
     </div>
 </template>
@@ -85,6 +85,7 @@
             }
         },
         mounted() {
+            document.title = 'Estates';
         },
         computed: {
             filteredEstates() {

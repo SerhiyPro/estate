@@ -5,6 +5,7 @@ import sh from 'shuffle-array';
 
 import App from './App'
 import router from './router'
+import * as VueGoogleMaps from "vue2-google-maps";
 
 import VueMaterial from 'vue-material'
 
@@ -26,12 +27,13 @@ import VueCookies from 'vue-cookies'
 import Autocomplete from 'v-autocomplete'
 import vueTopprogress from 'vue-top-progress'
 import './custom-directive/directives.js'
+import VueCarousel from 'vue-carousel';
 
 Vue.use(vueTopprogress);
 Vue.use(Autocomplete);
 // Vue.use(VueMaterial);
 Vue.use(VueCookies);
-
+Vue.use(VueCarousel);
 
 Vue.use(VueResource);
 
@@ -41,6 +43,13 @@ Vue.use(Vuetify, {
         secondary: colors.grey.darken1,
         accent: colors.shades.black,
         error: colors.red.accent3,
+    }
+});
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyAPXsXhFoz1pOqKqpPHXISxdb-5U7WAxC8",
+        libraries: "places"
     }
 });
 

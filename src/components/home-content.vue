@@ -1,41 +1,45 @@
 <template>
     <div>
-        <v-carousel class="carousel-template" :hide-delimiters="true">
-            <v-carousel-item
-                    v-for="(item,i) in items"
-                    :key="i"
-                    :src="item.photo"
-            ></v-carousel-item>
-        </v-carousel>
+        <section>
+            <v-carousel class="carousel-template" :hide-delimiters="true">
+                <v-carousel-item
+                        v-for="(item,i) in items"
+                        :key="i"
+                        :src="item.photo"
+                ></v-carousel-item>
+            </v-carousel>
+        </section>
 
-        <h1 class="recommendation-text">Рекомендовано</h1>
-        <div v-if="estatesAreFetched" class="cards-container">
-            <v-card :hover="true" class="estate-card" v-for="estate in shuffledEstates">
-                <router-link :to="'estate/' + estate.id">
-                    <v-img
-                            :src="homeCard"
-                            height="150px"
-                            aspect-ratio="2.75"
-                    ></v-img>
+        <section v-if="estatesAreFetched">
+            <h1 class="recommendation-text">Рекомендовано</h1>
+            <div class="cards-container">
+                <v-card :hover="true" class="estate-card" v-for="estate in shuffledEstates">
+                    <router-link :to="'estate/' + estate.id">
+                        <v-img
+                                :src="homeCard"
+                                height="150px"
+                                aspect-ratio="2.75"
+                        ></v-img>
 
-                    <v-card-title primary-title>
-                        <div style="color: black">
-                            <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
-                            <p style="margin-top: 5px">
-                                <span v-if="estate.floor"><b>Поверх:</b> {{ estate.floor }} <br></span>
-                                <b>Тип будинку:</b> {{ estate.housetype }} <br>
-                                <b>Умеблювання:</b> {{ estate.furniture }} <br>
-                                <b>Тип кімнат:</b> {{ estate.roomstype }}
-                            </p>
-                            <p>
-                                <b>Розташування:</b> вул. {{ estate.street }}, {{ estate.city }}
-                            </p>
-                        </div>
-                    </v-card-title>
-                </router-link>
-            </v-card>
-        </div>
-        <div class="advertisement">
+                        <v-card-title primary-title>
+                            <div style="color: black">
+                                <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
+                                <p style="margin-top: 5px">
+                                    <span v-if="estate.floor"><b>Поверх:</b> {{ estate.floor }} <br></span>
+                                    <b>Тип будинку:</b> {{ estate.housetype }} <br>
+                                    <b>Умеблювання:</b> {{ estate.furniture }} <br>
+                                    <b>Тип кімнат:</b> {{ estate.roomstype }}
+                                </p>
+                                <p>
+                                    <b>Розташування:</b> вул. {{ estate.street }}, {{ estate.city }}
+                                </p>
+                            </div>
+                        </v-card-title>
+                    </router-link>
+                </v-card>
+            </div>
+        </section>
+        <section class="advertisement">
             <div class="a-left">
                 <div class="internal">
                     <p class="title">Ви власник нерухомості і бажаєте продати її?</p>
@@ -51,12 +55,42 @@
                         підтверджують професіонали</p>
                 </div>
             </div>
-        </div>
+        </section>
+        <section>
+            <h1 class="recommendation-text">Наші партнери</h1>
+            <carousel :perPageCustom="[[0, 1], [480, 2], [768, 3], [1024, 4], [1920, 6]]" :autoplay="true"
+                      :autoplayTimeout="3000"
+                      :loop="true"
+                      :paginationEnabled="false">
+                <slide v-for="logo in partnerLogos">
+                    <img style="width: 80%; height: 250px; margin: auto;"
+                         :src="logo"/>
+                </slide>
+            </carousel>
+        </section>
+        <section>
+            <div>
+                <h2 style="text-align: left; padding: 10px;">Де ми знаходимось</h2>
+            </div>
+            <br>
+            <gmap-map
+                    :center="center"
+                    :zoom="12"
+                    style="width:100%;  height: 400px;"
+            >
+                <gmap-marker
+                        :key="index"
+                        v-for="(m, index) in markers"
+                        :position="m.position"
+                        @click="center=m.position"
+                ></gmap-marker>
+            </gmap-map>
+        </section>
     </div>
 </template>
 
 <script>
-    import {carousel1, carousel2, carousel3, carousel4, homeCard} from '../assets/images';
+    import {carousel1, carousel2, carousel3, carousel4, homeCard, partnerLogos} from '../assets/images';
 
     export default {
         name: "home-content",
@@ -79,7 +113,13 @@
                     {
                         photo: carousel4
                     }
-                ]
+                ],
+                partnerLogos,
+
+                center: {lat: 45.508, lng: -73.587},
+                markers: [],
+                places: [],
+                currentPlace: null
             }
         },
         methods: {
@@ -101,7 +141,33 @@
                 }).finally(() => {
                     this.loaded = true;
                 });
+            },
+            buildSlideMarkup() {
+                let slideMarkup = '';
+                for (let i = 1; i <= 8; i++) {
+                    slideMarkup += '<slide><span class="label">' + '<img :src="partnerLogos[i]">' + '</span></slide>'
+                }
+                return slideMarkup;
+            },
+
+            geolocate: function () {
+                navigator.geolocation.getCurrentPosition(position => {
+                    this.center = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                });
+                //adding marker with our coordinates to the map
+                const marker = {
+                    lat: 48.282121,
+                    lng: 25.946537
+                };
+                this.markers.push({position: marker});
             }
+        },
+        mounted() {
+            this.geolocate();
+            document.title = "Home Page";
         },
         created() {
             this.fetchTheData();
@@ -141,14 +207,13 @@
 
     .advertisement {
         margin: 20px 0;
-        height: 500px;
         display: flex;
         flex-wrap: wrap;
     }
 
     .advertisement > div {
         flex: 1 1 250px;
-        height: 100%;
+        height: 500px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -189,6 +254,10 @@
         color: #fff;
         font-size: 16px;
         line-height: 28px;
+    }
+
+    .partners {
+        height: 300px;
     }
 
 </style>

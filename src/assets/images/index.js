@@ -15,6 +15,15 @@ import * as estate7 from './estates/estate-7.jpg';
 import * as estate8 from './estates/estate-8.jpg';
 import * as estate9 from './estates/estate-9.jpg';
 
+import * as partner1 from './partners-logos/logo-1.png';
+import * as partner2 from './partners-logos/logo-2.jpg';
+import * as partner3 from './partners-logos/logo-3.jpg';
+import * as partner4 from './partners-logos/logo-4.png';
+import * as partner5 from './partners-logos/logo-5.jpg';
+import * as partner6 from './partners-logos/logo-6.jpg';
+import * as partner7 from './partners-logos/logo-7.png';
+import * as partner8 from './partners-logos/logo-8.png';
+
 let estates = [
     estate0,
     estate1,
@@ -26,11 +35,24 @@ let estates = [
     estate7,
     estate8,
     estate9];
+
+let partnerLogos = [
+    partner1,
+    partner2,
+    partner3,
+    partner4,
+    partner5,
+    partner6,
+    partner7,
+    partner8
+];
+
 export {
     carousel1,
     carousel2,
     carousel3,
     carousel4,
     homeCard,
-    estates
+    estates,
+    partnerLogos
 };

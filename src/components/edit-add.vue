@@ -12,7 +12,6 @@
                                 :counter="defaultRealtyUnit.name.counter"
                                 :type="defaultRealtyUnit.name.type"
                                 :label='defaultRealtyUnit.name.label'
-                                :rules="defaultRealtyUnit.name.rules"
                         ></v-text-field>
                         <v-textarea
                                 v-model="estate.description"
@@ -208,10 +207,6 @@
                 },
                 defaultRealtyUnit: {
                     'name': {
-                        rules: [
-                            v => !!v || 'Name is required',
-                            v => v.length <= 15 || 'Name must be less than 15 characters',
-                        ],
                         'type': 'text',
                         'label': 'Назва',
                         'counter': 15
@@ -340,7 +335,9 @@
             onStart() {
                 console.log(this.$route.path.split('/')[2]);
                 if (this.$route.path.split('/')[2] !== 'add') {
-                    console.log('editing ' + this.$route.path.split('/')[2]);
+                    document.title = 'Edit estate';
+                    //console.log('editing ' + this.$route.path.split('/')[2]);
+
                     this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], {
                         headers: {
                             'Authorization': localStorage.getItem('authorized'),
@@ -354,6 +351,9 @@
                         this.$router.go(-1);
                         console.log(error);
                     });
+                }
+                else {
+                    document.title = 'Add estate';
                 }
             },
             submit() {
@@ -494,12 +494,13 @@
     }
 
     .inputs-group > select {
-        flex: 1 1 250px;
+        flex: 1 1 300px;
         margin: 0 5px;
     }
 
     .half-width {
-        flex: 1 1 250px;
+        flex: 1 1 300px;
+        min-width: 35%;
         margin: 0 5px;
     }
 

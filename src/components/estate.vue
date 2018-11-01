@@ -123,6 +123,7 @@
             }
         },
         mounted() {
+            document.title = 'Estate';
         },
         computed: {},
         watch: {},
