@@ -36,6 +36,11 @@ export default new Router({
                     component: Estates
                 },
                 {
+                    path: '/estate/add',
+                    name: 'estate-add',
+                    component: EditAndAdd
+                },
+                {
                     path: '/estate/:id',
                     name: 'estate',
                     component: Estate

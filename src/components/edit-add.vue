@@ -2,7 +2,7 @@
     <v-layout style="margin-top: 10px">
         <v-flex xs12 sm8 offset-sm2 lg6 offset-lg3>
             <v-card>
-                <v-form ref="form" :v-model="isValid" @submit.prevent="submit">
+                <v-form v-if="isInit" ref="form" :v-model="isValid" @submit.prevent="submit">
                     <div class="info-block">
                         <div class="top-box">
                             <p>Основна інформація</p>
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                     <v-btn v-if="this.$route.path.split('/')[2] === 'add'" class="button-margin" type="submit"
-                           color="success">Створити
+                           flat color="orange">Створити
                     </v-btn>
                     <v-btn v-else class="button-margin" type="submit" flat color="orange">Редагувати</v-btn>
                 </v-form>
@@ -213,7 +213,7 @@
                     },
                     'description': {
                         rules: [
-                            v => v.length <= 200 || 'Description must be less than 200 characters'
+                            v => v.length <= 200 || 'Опис повинен бути менше 200 символів'
                         ],
                         'type': 'text',
                         'label': 'Опис',
@@ -221,25 +221,25 @@
                     },
                     'price': {
                         rules: [
-                            v => !!v || 'Price is required',
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$/.test(v) || 'Invalid price'
+                            v => !!v || 'Ціна необхідна',
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$/.test(v) || 'Неправильна ціна'
                         ],
                         'label': 'Ціна',
                         'type': 'text'
                     },
                     'city': {
                         rules: [
-                            v => !!v || 'Entering city is required',
-                            v => v.length <= 15 || 'City must be less than 15 symbols'
+                            v => !!v || 'Вкажіть місто',
+                            v => v.length <= 30 || 'Назва міста не повинна перевищувати 30 символів'
                         ],
                         'type': 'text',
                         'label': 'Місто',
-                        'counter': 15
+                        'counter': 30
                     },
                     'street': {
                         rules: [
-                            v => !!v || 'Enter the street',
-                            v => v.length <= 30 || 'Street must be less than 30 symbols'
+                            v => !!v || 'Вкажіть вулицю',
+                            v => v.length <= 30 || 'Назва вулиці не повинна бути довшою за 30 символів'
                         ],
                         'type': 'text',
                         'label': 'Вулиця',
@@ -247,8 +247,8 @@
                     },
                     'house': {
                         rules: [
-                            v => !!v || 'Enter the house',
-                            v => v.length <= 30 || 'House must be less than 30 symbols'
+                            v => !!v || 'Введіть будинок',
+                            v => v.length <= 30 || 'Назва будинку не повинна перевищувати 30 символів'
                         ],
                         'type': 'text',
                         'label': 'Будинок',
@@ -256,50 +256,50 @@
                     },
                     'floor': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Поверх'
                     },
                     'flat': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Квартира'
                     },
                     'rooms': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Кількість кімнат'
                     },
                     'height': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Висота стін'
                     },
                     'areaall': {
                         rules: [
-                            v => !!v || 'Enter the area of all rooms',
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$/.test(v) || 'Entered number is invalid'
+                            v => !!v || 'Введіть площу всіх кімнат',
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Площа всіх кімнат'
                     },
                     'areakitchen': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Площа кухні'
                     },
                     'arearooms': {
                         rules: [
-                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Entered number is invalid'
+                            v => /^(0|0[.|,]\d+|[1-9]\d*([.|,]\d+)?)$|^$/.test(v) || 'Введене число неправильне'
                         ],
                         'type': 'text',
                         'label': 'Площа жилих кімнат'
@@ -327,16 +327,49 @@
                     flooring: '',
                     heating: '',
                     repair: ''
-                }
-
+                },
+                emptyEstate: {
+                    name: '',
+                    description: '',
+                    housetype: '',
+                    roomstype: '',
+                    price: '',
+                    layout: '',
+                    city: '',
+                    street: '',
+                    house: '',
+                    floor: '',
+                    flat: '',
+                    rooms: '',
+                    height: '',
+                    areaall: '',
+                    areakitchen: '',
+                    arearooms: '',
+                    furniture: '',
+                    flooring: '',
+                    heating: '',
+                    repair: ''
+                },
+                isInit: false
+            }
+        },
+        watch: {
+            '$route.path'() {
+                console.log('asf');
+                this.onStart();
             }
         },
         methods: {
             onStart() {
                 console.log(this.$route.path.split('/')[2]);
+                // todo change
+                // this.estate = {...this.emptyEstate};
+                this.isInit = false;
+
                 if (this.$route.path.split('/')[2] !== 'add') {
                     document.title = 'Edit estate';
                     //console.log('editing ' + this.$route.path.split('/')[2]);
+                    this.isInit = true;
 
                     this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], {
                         headers: {
@@ -354,6 +387,10 @@
                 }
                 else {
                     document.title = 'Add estate';
+                    this.estate = Object.assign({}, this.emptyEstate);
+                    setTimeout(() => {
+                        this.isInit = true;
+                    }, 0)
                 }
             },
             submit() {
@@ -478,7 +515,6 @@
         mounted() {
         },
         computed: {},
-        watch: {},
         created() {
             this.onStart();
         }
@@ -525,11 +561,10 @@
         border: 1px solid var(--border-title-color);
     }
 
-    .third-width{
+    .third-width {
         margin: 0 5px;
         flex: 1 1 150px;
     }
-
 
     .button-margin {
         margin-left: 20px;

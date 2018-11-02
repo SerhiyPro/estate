@@ -7,21 +7,14 @@ import App from './App'
 import router from './router'
 import * as VueGoogleMaps from "vue2-google-maps";
 
-import VueMaterial from 'vue-material'
-
-// import 'vue-material/dist/theme/default.css'
 import './custom-directive/directives.js'
 
 import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.css'
 
 import './assets/css/fonts-matirial.css'
-// import './assets/css/material-cards.css'
-import './assets/css/roboto.css'
-// import 'vue-material/dist/vue-material.css'
-
-
-// import './assets/css/css.css'
+import './assets/css/font-comfortaa.css'
+import './assets/css/font-pacifico.css'
 
 import VueCookies from 'vue-cookies'
 import Autocomplete from 'v-autocomplete'
@@ -31,7 +24,7 @@ import VueCarousel from 'vue-carousel';
 
 Vue.use(vueTopprogress);
 Vue.use(Autocomplete);
-// Vue.use(VueMaterial);
+
 Vue.use(VueCookies);
 Vue.use(VueCarousel);
 

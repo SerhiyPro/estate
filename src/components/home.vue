@@ -70,7 +70,7 @@
                 this.$router.push('/estates');
             },
             addNewEstate() {
-                this.$router.push('/estate/add/edit')
+                this.$router.push('/estate/add')
             },
             logOut() {
                 localStorage.removeItem('authorized');

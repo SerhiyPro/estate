@@ -115,7 +115,6 @@
                     // Success
                     this.$root.callAlert ('Успішно видалено', 'success');
                     this.$router.push('/estates');
-                    // console.log(this.estates);
                 }).catch(error => {
                     this.$root.callAlert ('Будівля не була видалена, сталась помилка', 'danger');
                     console.log(error)

@@ -1,7 +1,7 @@
 <template>
     <div>
         <section>
-            <v-carousel class="carousel-template" :hide-delimiters="true">
+            <v-carousel class="full-page" :hide-delimiters="true">
                 <v-carousel-item
                         v-for="(item,i) in items"
                         :key="i"
@@ -24,7 +24,7 @@
                         <v-card-title primary-title>
                             <div style="color: black">
                                 <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
-                                <p style="margin-top: 5px">
+                                <p class="cart-content">
                                     <span v-if="estate.floor"><b>Поверх:</b> {{ estate.floor }} <br></span>
                                     <b>Тип будинку:</b> {{ estate.housetype }} <br>
                                     <b>Умеблювання:</b> {{ estate.furniture }} <br>
@@ -42,7 +42,7 @@
         <section class="advertisement">
             <div class="a-left">
                 <div class="internal">
-                    <p class="title">Ви власник нерухомості і бажаєте продати її?</p>
+                    <p class="title-name">Ви власник нерухомості і бажаєте її продати?</p>
                     <p class="body">Наші професіонали нададуть юридичну консультацію, проведуть оцінку майна і
                         допоможуть знайти найкращих покупців за
                         найвигіднішою ціною</p>
@@ -50,7 +50,7 @@
             </div>
             <div class="a-right">
                 <div class="internal">
-                    <p class="title">Бажаєте придбати нову нерухомість?</p>
+                    <p class="title-name">Волієте придбати нову нерухомість?</p>
                     <p class="body">У нас ви знайдете найкраще житло за привабливою ціною, житло якість якого
                         підтверджують професіонали</p>
                 </div>
@@ -76,7 +76,8 @@
             <gmap-map
                     :center="center"
                     :zoom="12"
-                    style="width:100%;  height: 400px;"
+                    class="full-page"
+
             >
                 <gmap-marker
                         :key="index"
@@ -176,7 +177,7 @@
 </script>
 
 <style scoped>
-    .carousel-template {
+    .full-page {
         height: calc(100vh - var(--header-height));
         min-height: 400px;
     }
@@ -203,6 +204,11 @@
     .recommendation-text {
         text-align: left;
         padding: 10px;
+    }
+
+    .cart-content {
+        margin-top: 5px;
+        line-height: 1.5
     }
 
     .advertisement {
@@ -237,23 +243,24 @@
 
     .a-right > div.internal {
         background-color: rgba(113, 172, 65, 0.7);
+        font-family: 'Pacifico', cursive;
     }
 
     .a-left > div.internal {
         background-color: rgba(28, 164, 232, 0.7);
+        font-family: 'Pacifico', cursive;
     }
 
-    .internal > p.title {
+    .internal > p.title-name {
         color: #fff;
-        font-size: 27px;
-        line-height: 34px;
-        font-weight: 100;
+        font-size: 50px;
+        line-height: 60px;
     }
 
     .internal > p.body {
         color: #fff;
-        font-size: 16px;
-        line-height: 28px;
+        font-size: 25px;
+        line-height: 40px;
     }
 
     .partners {

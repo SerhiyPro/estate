@@ -15,7 +15,7 @@
                             <v-card-title primary-title>
                                 <div style="color: #000000">
                                     <h3 class="headline mb-0">Квартира {{ estate.flat }}</h3>
-                                    <p style="margin-top: 5px"><b>Поверх:</b> {{ estate.floor }} <br>
+                                    <p class="cart-content"><b>Поверх:</b> {{ estate.floor }} <br>
                                         <b>Тип будинку:</b> {{ estate.housetype }} <br>
                                         <b>Умеблювання:</b> {{ estate.furniture }} <br>
                                         <b>Тип кімнат:</b> {{ estate.roomstype }}
@@ -29,13 +29,13 @@
                     </v-card>
                 </div>
                 <section v-else style="text-align: center; width: 100%">
-                    Estate is not found,
-                    <router-link to="/estate/add/edit" class="custon-link"><strong>but you can add a new one</strong>
+                    Будівля не знайдена,
+                    <router-link to="/estate/add" class="custon-link"><strong>але ви можете додати нову</strong>
                     </router-link>
                 </section>
             </section>
             <section v-else>
-                Loading...
+                Завантаження...
             </section>
         </v-layout>
     </div>
@@ -156,5 +156,10 @@
 
     .custon-link {
         color: var(--header-color);
+    }
+
+    .cart-content {
+        margin-top: 5px;
+        line-height: 1.5
     }
 </style>
