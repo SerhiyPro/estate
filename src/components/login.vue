@@ -1,5 +1,5 @@
 <template>
-    <div class="centered-main image">
+    <div class="centered-main image" :style="{'background-image': `url(${estates[3]})`}">
         <v-layout>
             <v-flex xs12 sm4 offset-sm4>
                 <v-card class="centered-card">
@@ -39,10 +39,13 @@
 </template>
 
 <script>
+    import {estates} from "../assets/images";
+
     export default {
         name: "Login",
         data() {
             return {
+                estates,
                 isValid: true,
                 authorization: {
                     login: '',
@@ -106,7 +109,7 @@
     }
 
     .image {
-        background-image: url("../assets/images/estates/estate-3.jpg");
+        /*background-image: url("../assets/images/estates/estate-3.jpg");*/
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;

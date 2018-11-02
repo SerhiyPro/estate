@@ -40,7 +40,7 @@
             </div>
         </section>
         <section class="advertisement">
-            <div class="a-left">
+            <div class="a-left" :style="{'background-image': `url(${left})`}">
                 <div class="internal">
                     <p class="title-name">Ви власник нерухомості і бажаєте її продати?</p>
                     <p class="body">Наші професіонали нададуть юридичну консультацію, проведуть оцінку майна і
@@ -48,7 +48,7 @@
                         найвигіднішою ціною</p>
                 </div>
             </div>
-            <div class="a-right">
+            <div class="a-right" :style="{'background-image': `url(${right})`}">
                 <div class="internal">
                     <p class="title-name">Волієте придбати нову нерухомість?</p>
                     <p class="body">У нас ви знайдете найкраще житло за привабливою ціною, житло якість якого
@@ -91,12 +91,14 @@
 </template>
 
 <script>
-    import {carousel1, carousel2, carousel3, carousel4, homeCard, partnerLogos} from '../assets/images';
+    import {carousel1, carousel2, carousel3, carousel4, homeCard, partnerLogos, right, left} from '../assets/images';
 
     export default {
         name: "home-content",
         data() {
             return {
+                right,
+                left,
                 homeCard,
                 allEstates: {},
                 shuffledEstates: {},
@@ -224,14 +226,6 @@
         background-repeat: no-repeat;
         background-size: cover;
         text-align: right;
-    }
-
-    .advertisement > div.a-right {
-        background-image: url(../assets/images/home-content/right.jpg);
-    }
-
-    .advertisement > div.a-left {
-        background-image: url(../assets/images/home-content/left.jpg);
     }
 
     .internal {

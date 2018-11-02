@@ -24,6 +24,10 @@ import * as partner6 from './partners-logos/logo-6.jpg';
 import * as partner7 from './partners-logos/logo-7.png';
 import * as partner8 from './partners-logos/logo-8.png';
 
+import * as right from './home-content/right.jpg';
+import * as left from './home-content/left.jpg';
+
+
 let estates = [
     estate0,
     estate1,
@@ -34,7 +38,8 @@ let estates = [
     estate6,
     estate7,
     estate8,
-    estate9];
+    estate9
+];
 
 let partnerLogos = [
     partner1,
@@ -54,5 +59,7 @@ export {
     carousel4,
     homeCard,
     estates,
-    partnerLogos
+    partnerLogos,
+    right,
+    left
 };
