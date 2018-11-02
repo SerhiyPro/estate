@@ -9,9 +9,7 @@ import homeContent from '@/components/home-content'
 import EditAndAdd from '@/components/edit-add'
 
 import VueLocalStorage from 'vue-localstorage'
-import VueCookies from 'vue-cookies'
 
-Vue.use(VueCookies);
 Vue.use(VueLocalStorage);
 Vue.use(Router);
 
@@ -22,9 +20,6 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Home,
-            meta: {
-                title: 'Home Page - Example App'
-            },
             children: [
                 {
                     path: '',

@@ -23,11 +23,11 @@
                         <div class="inputs-group">
                             <select v-model="checks.checkedTypeOfTheHouse">
                                 <option :selected="true">Тип будинку</option>
-                                <option v-for="item in selects.housetype.items">{{item}}</option>
+                                <option v-for="item in selects.housetype.items" :key="item.id">{{item}}</option>
                             </select>
                             <select v-model="checks.checkedTypeOfRooms">
                                 <option :selected="true">Тип кімнат</option>
-                                <option v-for="item in selects.typeOfRooms.items">{{item}}</option>
+                                <option v-for="item in selects.typeOfRooms.items" :key="item.id">{{item}}</option>
                             </select>
                             <v-text-field
                                     class="make-inline half-width"
@@ -39,7 +39,7 @@
                             ></v-text-field>
                             <select style="margin-bottom: 19px;" v-model="checks.checkedLayout">
                                 <option :selected="true">Планування</option>
-                                <option v-for="item in selects.layout.items">{{item}}</option>
+                                <option v-for="item in selects.layout.items" :key="item.id">{{item}}</option>
                             </select>
                         </div>
                     </div>
@@ -138,19 +138,19 @@
                         <div class="inputs-group">
                             <select v-model="checks.checkedFurniture">
                                 <option :selected="true">Меблі</option>
-                                <option v-for="item in selects.furniture.items">{{item}}</option>
+                                <option v-for="item in selects.furniture.items" :key="item.id">{{item}}</option>
                             </select>
                             <select v-model="checks.checkedFlooring">
                                 <option :selected="true">Тип підлоги</option>
-                                <option v-for="item in selects.flooring.items">{{item}}</option>
+                                <option v-for="item in selects.flooring.items" :key="item.id">{{item}}</option>
                             </select>
                             <select style="margin-top: 30px" v-model="checks.checkedHeating">
                                 <option :selected="true">Вид опалення</option>
-                                <option v-for="item in selects.heating.items">{{item}}</option>
+                                <option v-for="item in selects.heating.items" :key="item.id">{{item}}</option>
                             </select>
                             <select v-model="checks.checkedRepair">
                                 <option :selected="true">Ремонт</option>
-                                <option v-for="item in selects.repair.items">{{item}}</option>
+                                <option v-for="item in selects.repair.items" :key="item.id">{{item}}</option>
                             </select>
                         </div>
                     </div>
@@ -355,13 +355,11 @@
         },
         watch: {
             '$route.path'() {
-                console.log('asf');
                 this.onStart();
             }
         },
         methods: {
             onStart() {
-                console.log(this.$route.path.split('/')[2]);
                 // todo change
                 // this.estate = {...this.emptyEstate};
                 this.isInit = false;

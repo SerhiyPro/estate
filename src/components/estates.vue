@@ -4,7 +4,7 @@
         <v-layout>
             <section v-if="loaded" style="width: 100%">
                 <div class="card-div-style" v-if="filteredEstates.length">
-                    <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates">
+                    <v-card :hover="true" class="estate-card" v-for="estate in filteredEstates" :key="estate.id">
                         <router-link :to="'estate/' + estate.id">
                             <v-img
                                     :src="estatesImages[`0x${estate.id}`%10]"

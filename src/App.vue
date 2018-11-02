@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="content">
-            <alert v-for="(alert,index) in $root.alerts" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
+            <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
                    :withCloseBtn="true">
                 <span>{{ alert.text }}</span>
             </alert>

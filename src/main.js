@@ -16,16 +16,9 @@ import './assets/css/fonts-matirial.css'
 import './assets/css/font-comfortaa.css'
 import './assets/css/font-pacifico.css'
 
-import VueCookies from 'vue-cookies'
-import Autocomplete from 'v-autocomplete'
-import vueTopprogress from 'vue-top-progress'
 import './custom-directive/directives.js'
 import VueCarousel from 'vue-carousel';
 
-Vue.use(vueTopprogress);
-Vue.use(Autocomplete);
-
-Vue.use(VueCookies);
 Vue.use(VueCarousel);
 
 Vue.use(VueResource);

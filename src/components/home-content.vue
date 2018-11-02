@@ -13,7 +13,7 @@
         <section v-if="estatesAreFetched">
             <h1 class="recommendation-text">Рекомендовано</h1>
             <div class="cards-container">
-                <v-card :hover="true" class="estate-card" v-for="estate in shuffledEstates">
+                <v-card :hover="true" class="estate-card" v-for="estate in shuffledEstates" :key="estate.id">
                     <router-link :to="'estate/' + estate.id">
                         <v-img
                                 :src="homeCard"
@@ -62,8 +62,8 @@
                       :autoplayTimeout="3000"
                       :loop="true"
                       :paginationEnabled="false">
-                <slide v-for="logo in partnerLogos">
-                    <img style="width: 80%; height: 250px; margin: auto;"
+                <slide v-for="logo in partnerLogos" :key="logo.id">
+                    <img class="partner-photos"
                          :src="logo"/>
                 </slide>
             </carousel>
@@ -267,4 +267,9 @@
         height: 300px;
     }
 
+    .partner-photos {
+        width: 80%;
+        height: 250px;
+        margin: auto;
+    }
 </style>
