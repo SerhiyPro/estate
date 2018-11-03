@@ -1,13 +1,11 @@
 <template>
-    <div class="wrapper">
-        <div class="content">
+        <div>
             <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
                    :withCloseBtn="true">
                 <span>{{ alert.text }}</span>
             </alert>
             <router-view></router-view>
         </div>
-    </div>
 </template>
 
 <script>
@@ -115,13 +113,6 @@
         color: #fff !important;
     }
 
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        font-size: 16px;
-    }
-
     h2 {
         text-align: center;
     }
@@ -134,12 +125,6 @@
         position: relative;
         z-index: 2;
         cursor: pointer;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
     }
 
     .VueCarousel-slide {
