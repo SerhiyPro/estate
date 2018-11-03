@@ -1,5 +1,5 @@
 <template>
-        <div>
+        <div class="content">
             <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
                    :withCloseBtn="true">
                 <span>{{ alert.text }}</span>
@@ -131,5 +131,11 @@
         position: relative;
         min-height: 100px;
         text-align: center;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 </style>
