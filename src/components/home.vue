@@ -5,13 +5,7 @@
                 <v-flex>
                     <v-card-title class="blue header">
                         <router-link to="/" style="text-decoration: none;">
-                            <span class="link-text">Д</span>
-                        </router-link>
-                        <router-link to="/" style="text-decoration: none;">
                             <img class="logo" src="../assets/images/logo.png">
-                        </router-link>
-                        <router-link to="/" style="text-decoration: none;">
-                            <span class="link-text">дому</span>
                         </router-link>
                         <v-spacer></v-spacer>
                         <v-form @click.prevent="">

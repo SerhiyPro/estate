@@ -70,7 +70,7 @@
         </section>
         <section>
             <div>
-                <h2 style="text-align: left; padding: 10px;">Де ми знаходимось</h2>
+                <h2 class="recommendation-text">Де ми знаходимось</h2>
             </div>
             <br>
             <gmap-map
@@ -119,7 +119,7 @@
                 ],
                 partnerLogos,
 
-                center: {lat: 45.508, lng: -73.587},
+                center: {lat: 48.282121, lng: 25.946537},
                 markers: [],
                 places: [],
                 currentPlace: null
@@ -153,7 +153,7 @@
                 return slideMarkup;
             },
 
-            geolocate: function () {
+            geolocate() {
                 navigator.geolocation.getCurrentPosition(position => {
                     this.center = {
                         lat: position.coords.latitude,
@@ -204,8 +204,8 @@
     }
 
     .recommendation-text {
-        text-align: left;
-        padding: 10px;
+        text-align: center;
+        padding: 20px;
     }
 
     .cart-content {
@@ -221,7 +221,7 @@
 
     .advertisement > div {
         flex: 1 1 250px;
-        height: 500px;
+        min-height: 500px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -237,24 +237,23 @@
 
     .a-right > div.internal {
         background-color: rgba(113, 172, 65, 0.7);
-        font-family: 'Pacifico', cursive;
     }
 
     .a-left > div.internal {
         background-color: rgba(28, 164, 232, 0.7);
-        font-family: 'Pacifico', cursive;
     }
 
     .internal > p.title-name {
         color: #fff;
-        font-size: 50px;
-        line-height: 60px;
+        font-size: 40px;
+        line-height: 50px;
     }
 
     .internal > p.body {
         color: #fff;
         font-size: 25px;
-        line-height: 40px;
+        line-height: 30px;
+        padding-bottom: 25px;
     }
 
     .partners {

@@ -13,8 +13,7 @@ import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.css'
 
 import './assets/css/fonts-matirial.css'
-import './assets/css/font-comfortaa.css'
-import './assets/css/font-pacifico.css'
+import  './assets/css/font-ubuntu.css'
 
 import './custom-directive/directives.js'
 import VueCarousel from 'vue-carousel';

@@ -2,7 +2,7 @@
     <div class="centered-main image" :style="{'background-image': `url(${estates[3]})`}">
         <v-layout>
             <v-flex xs12 sm4 offset-sm4>
-                <v-card class="centered-card">
+                <v-card class="centered-card" style="min-width: 350px">
                     <v-container fill-height fluid>
                         <v-layout fill-height>
                             <v-flex xs12 align-end flexbox>

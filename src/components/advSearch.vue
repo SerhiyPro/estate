@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section @click="show = !show" class="adv-search" style="cursor: pointer;">
+        <section @click="show = !show" class="adv-search">
             <div class="top-box">
                 <p>Розширений пошук</p>
             </div>
@@ -172,12 +172,14 @@
 </script>
 
 <style scoped>
+
     .adv-search {
         color: #999999;
-        margin: 10px;
+        margin: 20px;
         height: auto;
         position: relative;
         border-top: 3px solid #999999;
+        cursor: pointer;
     }
 
     .internal-block {
