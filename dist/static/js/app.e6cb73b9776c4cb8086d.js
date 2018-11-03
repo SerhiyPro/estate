@@ -3121,7 +3121,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._l((_vm.$root.alerts), function(alert, index) {
+  return _c('div', {
+    staticClass: "content"
+  }, [_vm._l((_vm.$root.alerts), function(alert, index) {
     return _c('alert', {
       key: index,
       style: ('top:' + (((index)) * 50) + 'px'),
@@ -3660,4 +3662,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 ],[39]);
-//# sourceMappingURL=app.7757a49ceb1f1922d08a.js.map
+//# sourceMappingURL=app.e6cb73b9776c4cb8086d.js.map
