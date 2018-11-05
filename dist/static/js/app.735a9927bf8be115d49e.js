@@ -2501,8 +2501,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('v-layout', [_c('v-flex', {
     attrs: {
       "xs12": "",
-      "sm4": "",
-      "offset-sm4": ""
+      "sm6": "",
+      "offset-sm3": "",
+      "md4": "",
+      "offset-md4": ""
     }
   }, [_c('v-card', {
     staticClass: "centered-card",
@@ -3665,4 +3667,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 ],[39]);
-//# sourceMappingURL=app.5814a48b10d5683ced5b.js.map
+//# sourceMappingURL=app.735a9927bf8be115d49e.js.map
