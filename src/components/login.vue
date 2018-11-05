@@ -2,11 +2,11 @@
     <div class="centered-main image" :style="{'background-image': `url(${estates[3]})`}">
         <v-layout>
             <v-flex xs12 sm4 offset-sm4>
-                <v-card class="centered-card" style="min-width: 350px">
-                    <v-container fill-height fluid>
+                <v-card class="centered-card" style="min-width: 320px">
+                    <v-container fill-height fluid style="padding: 10px 0;">
                         <v-layout fill-height>
                             <v-flex xs12 align-end flexbox>
-                                <span class="headline">Нерухомість на продаж</span>
+                                <span class="headline">Агенство нерухомісті</span>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -29,7 +29,7 @@
 
                     </v-card-title>
                     <v-card-actions class="login-buttons">
-                        <v-btn flat color="orange" type="submit" @click.prevent="submit">Авторизуватись</v-btn>
+                        <v-btn flat color="orange" type="submit" @click.prevent="submit">Увійти</v-btn>
                         <v-btn flat color="orange"  v-disable="{disable:true,value:'Найближчим часом'}">Зареєструватись</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -129,6 +129,6 @@
 
     .login-buttons {
         display: flex;
-        justify-content: flex-end;
+        /*justify-content: flex-end;*/
     }
 </style>
