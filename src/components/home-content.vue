@@ -231,7 +231,7 @@
     .internal {
         max-width: 100%;
         height: 100%;
-        padding: 100px 60px 0 60px;
+        padding: 100px 20px 0 10px;
         box-sizing: border-box;
     }
 
@@ -245,14 +245,12 @@
 
     .internal > p.title-name {
         color: #fff;
-        font-size: 40px;
-        line-height: 50px;
+        font-size: 36px;
     }
 
     .internal > p.body {
         color: #fff;
-        font-size: 25px;
-        line-height: 30px;
+        font-size: 24px;
         padding-bottom: 25px;
     }
 

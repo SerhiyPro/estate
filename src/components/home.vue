@@ -94,8 +94,4 @@
         width: 50px;
     }
 
-    .link-text {
-        color: white;
-        font-size: 20px;
-    }
 </style>
