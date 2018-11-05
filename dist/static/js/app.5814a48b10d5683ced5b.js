@@ -2507,9 +2507,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('v-card', {
     staticClass: "centered-card",
     staticStyle: {
-      "min-width": "350px"
+      "min-width": "320px"
     }
   }, [_c('v-container', {
+    staticStyle: {
+      "padding": "10px 0"
+    },
     attrs: {
       "fill-height": "",
       "fluid": ""
@@ -2526,7 +2529,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('span', {
     staticClass: "headline"
-  }, [_vm._v("Нерухомість на продаж")])])], 1)], 1), _vm._v(" "), _c('v-card-title', [_c('v-form', {
+  }, [_vm._v("Агенство нерухомісті")])])], 1)], 1), _vm._v(" "), _c('v-card-title', [_c('v-form', {
     ref: "form",
     staticClass: "inputs",
     attrs: {
@@ -2578,7 +2581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         return _vm.submit($event)
       }
     }
-  }, [_vm._v("Авторизуватись")]), _vm._v(" "), _c('v-btn', {
+  }, [_vm._v("Увійти")]), _vm._v(" "), _c('v-btn', {
     directives: [{
       name: "disable",
       rawName: "v-disable",
@@ -3662,4 +3665,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 ],[39]);
-//# sourceMappingURL=app.e6cb73b9776c4cb8086d.js.map
+//# sourceMappingURL=app.5814a48b10d5683ced5b.js.map
