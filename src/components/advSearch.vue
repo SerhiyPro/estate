@@ -4,8 +4,8 @@
             <div class="top-box">
                 <p>Розширений пошук</p>
             </div>
-            <img src="http://lessonpix.com/drawings/168/100x100/Gray+Triangle.png"
-                 class="triangle">
+            <img src="../assets/images/GrayTriangle.png"
+                 class="triangle" :class="{reverse: isReversed}">
             <transition name="slide-fade">
                 <section @click.stop="" v-if="show" class="internal-block" style="cursor: auto;">
                     <div class="info-block">
@@ -128,6 +128,7 @@
         data() {
             return {
                 show: false,
+                isReversed: true,
                 toSearch: {
                     name: '',
                     housetype: '',
@@ -162,6 +163,9 @@
                     this.$emit('advSearch', this.toSearch);
                 },
                 deep: true
+            },
+            show() {
+                this.isReversed = !this.isReversed;
             }
         },
         created() {
@@ -199,12 +203,22 @@
     }
 
     .triangle {
+        display: none;
+    }
+
+    .reverse {
         -webkit-transform: scaleY(-1);
         transform: scaleY(-1);
-        height: 25px;
-        position: absolute;
-        top: -10px;
-        right: 100px;
+    }
+
+    @media screen and (min-width: 480px) {
+        .triangle {
+            display: block;
+            height: 25px;
+            position: absolute;
+            top: -10px;
+            right: 100px;
+        }
     }
 
     .info-block {
