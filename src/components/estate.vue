@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-layout style="margin-top: 20px">
+        <v-layout class="main">
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
                     <v-img
@@ -138,5 +138,9 @@
         width: 100%;
         padding-right: 10px;
         text-align: right;
+    }
+
+    .main {
+        margin-top: 20px;
     }
 </style>

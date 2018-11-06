@@ -21,14 +21,24 @@
                                 :rules="defaultRealtyUnit.description.rules"
                         ></v-textarea>
                         <div class="inputs-group">
-                            <select v-model="checks.checkedTypeOfTheHouse">
-                                <option :selected="true">Тип будинку</option>
-                                <option v-for="item in selects.housetype.items" :key="item.id">{{item}}</option>
-                            </select>
-                            <select v-model="checks.checkedTypeOfRooms">
-                                <option :selected="true">Тип кімнат</option>
-                                <option v-for="item in selects.typeOfRooms.items" :key="item.id">{{item}}</option>
-                            </select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.housetype"
+                                    :items="selects.housetype.items"
+                                    label="Тип будинку"
+                            ></v-select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.roomstype"
+                                    :items="selects.typeOfRooms.items"
+                                    label="Тип кімнат"
+                            ></v-select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.layout"
+                                    :items="selects.layout.items"
+                                    label="Планування"
+                            ></v-select>
                             <v-text-field
                                     class="make-inline half-width"
                                     v-model="estate.price"
@@ -37,10 +47,6 @@
                                     :rules="defaultRealtyUnit.price.rules"
                                     step="100"
                             ></v-text-field>
-                            <select style="margin-bottom: 19px;" v-model="checks.checkedLayout">
-                                <option :selected="true">Планування</option>
-                                <option v-for="item in selects.layout.items" :key="item.id">{{item}}</option>
-                            </select>
                         </div>
                     </div>
                     <div class="info-block">
@@ -136,22 +142,30 @@
                             <p>Додатково</p>
                         </div>
                         <div class="inputs-group">
-                            <select v-model="checks.checkedFurniture">
-                                <option :selected="true">Меблі</option>
-                                <option v-for="item in selects.furniture.items" :key="item.id">{{item}}</option>
-                            </select>
-                            <select v-model="checks.checkedFlooring">
-                                <option :selected="true">Тип підлоги</option>
-                                <option v-for="item in selects.flooring.items" :key="item.id">{{item}}</option>
-                            </select>
-                            <select style="margin-top: 30px" v-model="checks.checkedHeating">
-                                <option :selected="true">Вид опалення</option>
-                                <option v-for="item in selects.heating.items" :key="item.id">{{item}}</option>
-                            </select>
-                            <select v-model="checks.checkedRepair">
-                                <option :selected="true">Ремонт</option>
-                                <option v-for="item in selects.repair.items" :key="item.id">{{item}}</option>
-                            </select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.furniture"
+                                    :items="selects.furniture.items"
+                                    label="Умеблювання"
+                            ></v-select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.flooring"
+                                    :items="selects.flooring.items"
+                                    label="Тип підлоги"
+                            ></v-select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.heating"
+                                    :items="selects.heating.items"
+                                    label="Вид опалення"
+                            ></v-select>
+                            <v-select
+                                    class="selects"
+                                    v-model="estate.repair"
+                                    :items="selects.repair.items"
+                                    label="Ремонт"
+                            ></v-select>
                         </div>
                     </div>
                     <v-btn v-if="this.$route.path.split('/')[2] === 'add'" class="button-margin" type="submit"
@@ -170,38 +184,30 @@
         name: 'editAndAdd',
         data() {
             return {
+                pageType: this.$route.path.split('/')[2],
                 isValid: true,
-                checks: {
-                    checkedTypeOfTheHouse: 'Тип будинку',
-                    checkedTypeOfRooms: 'Тип кімнат',
-                    checkedLayout: 'Планування',
-                    checkedFlooring: 'Тип підлоги',
-                    checkedFurniture: 'Меблі',
-                    checkedHeating: 'Вид опалення',
-                    checkedRepair: 'Ремонт'
-                },
                 selects: {
                     'housetype': {
-                        items: ['Цегляний', 'Дерев\'яний', 'Панельний']
+                        items: ['Не вказано', 'Цегляний', 'Дерев\'яний', 'Панельний']
                     },
                     'typeOfRooms': {
-                        items: ['Суміжні', 'Роздільні', 'Суміжно-роздільні']
+                        items: ['Не вказано', 'Суміжні', 'Роздільні', 'Суміжно-роздільні']
                     },
                     'layout': {
-                        items: ['Чешка', 'Київка', 'Старий фонд', 'Хрущовка', 'Сталінка', 'Новобудова',
+                        items: ['Не вказано', 'Чешка', 'Київка', 'Старий фонд', 'Хрущовка', 'Сталінка', 'Новобудова',
                             'Особняк', 'Спецпроект', 'Гуртожиток']
                     },
                     'flooring': {
-                        items: ['Ламінат', 'Дерево', 'Паркет', 'Плитка', 'Лінолеум']
+                        items: ['Не вказано', 'Ламінат', 'Дерево', 'Паркет', 'Плитка', 'Лінолеум']
                     },
                     'furniture': {
-                        items: ['Старі меблі', 'Нові меблі']
+                        items: ['Без меблів', 'Старі меблі', 'Нові меблі']
                     },
                     'heating': {
-                        items: ['Без опалення', 'Пічне', 'Централізоване', 'Конвектор', 'АГВ', 'Котельня']
+                        items: ['Не вказано', 'Без опалення', 'Пічне', 'Централізоване', 'Конвектор', 'АГВ', 'Котельня']
                     },
                     'repair': {
-                        items: ['Не потиньковано', 'Від забудовника', 'Нежилий стан', 'Добрий стан',
+                        items: ['Не вказано', 'Не потиньковано', 'Від забудовника', 'Нежилий стан', 'Добрий стан',
                             'Косметичний ремонт', 'Євроремонт', 'Дизайнерський ремонт', 'Частковий']
                     }
                 },
@@ -357,17 +363,14 @@
         watch: {
             '$route.path'() {
                 this.onStart();
-            }
+            },
         },
         methods: {
             onStart() {
-                // todo change
-                // this.estate = {...this.emptyEstate};
                 this.isInit = false;
 
-                if (this.$route.path.split('/')[2] !== 'add') {
+                if (this.pageType !== 'add') {
                     document.title = 'Edit estate';
-                    //console.log('editing ' + this.$route.path.split('/')[2]);
                     this.isInit = true;
 
                     this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], {
@@ -377,7 +380,6 @@
                     }).then(function (response) {
                         console.log(response.body);
                         this.fillEstateObject(response);
-                        this.fillChecks(response);
                     }).catch(error => {
                         this.$root.callAlert('Неправильна адреса будівлі', 'danger');
                         this.$router.go(-1);
@@ -393,16 +395,11 @@
                 }
             },
             submit() {
-                // todo change the way we get info from selects
                 if (this.$refs.form.validate()) {
-                    this.checkSelects();
-                    if (this.$route.path.split('/')[2] === 'add')
+                    if (this.pageType === 'add')
                         this.addEstate();
                     else
                         this.editEstate();
-                }
-                else {
-                    // todo alerting user that he entered invalid values
                 }
             },
             addEstate() {
@@ -422,14 +419,13 @@
                 });
             },
             editEstate() {
-                this.$http.put(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], this.estate, {
+                this.$http.put(`${this.$root.apiUrl}/realty/${this.pageType}`, this.estate, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
                 })
                     .then(function (response) {
                         // Success
-
                         this.$root.callAlert('Будівля успішно відредагована', 'success');
                         this.$router.push('/estates');
                     }).catch(error => {
@@ -437,78 +433,17 @@
                     console.log(error);
                 });
             },
-            checkSelects() {
-                let phrase = 'Не вказано';
-                if (this.selects.housetype.items.indexOf(this.checks.checkedTypeOfTheHouse) === -1)
-                    this.estate.housetype = phrase;
-                else
-                    this.estate.housetype = this.checks.checkedTypeOfTheHouse;
-
-                if (this.selects.typeOfRooms.items.indexOf(this.checks.checkedTypeOfRooms) === -1)
-                    this.estate.roomstype = phrase;
-                else
-                    this.estate.roomstype = this.checks.checkedTypeOfRooms;
-
-                if (this.selects.layout.items.indexOf(this.checks.checkedLayout) === -1)
-                    this.estate.layout = phrase;
-                else
-                    this.estate.layout = this.checks.checkedLayout;
-
-                if (this.selects.furniture.items.indexOf(this.checks.checkedFurniture) === -1)
-                    this.estate.furniture = 'Без меблів';
-                else
-                    this.estate.furniture = this.checks.checkedFurniture;
-
-                if (this.selects.flooring.items.indexOf(this.checks.checkedFlooring) === -1)
-                    this.estate.flooring = phrase;
-                else
-                    this.estate.flooring = this.checks.checkedFlooring;
-
-                if (this.selects.heating.items.indexOf(this.checks.checkedHeating) === -1)
-                    this.estate.heating = phrase;
-                else
-                    this.estate.heating = this.checks.checkedHeating;
-
-                if (this.selects.repair.items.indexOf(this.checks.checkedRepair) === -1)
-                    this.estate.repair = phrase;
-                else
-                    this.estate.repair = this.checks.checkedRepair;
-            },
-            fillChecks(response) {
-                if (response.body.layout.length === 0)
-                    this.checks.checkedLayout = response.body.layout;
-                if (response.body.housetype.length === 0)
-                    this.checks.checkedTypeOfTheHouse = response.body.housetype;
-                if (response.body.roomstype.length === 0)
-                    this.checks.checkedTypeOfRooms = response.body.roomstype;
-                if (response.body.furniture.length === 0)
-                    this.checks.checkedFurniture = response.body.furniture;
-                if (response.body.flooring.length === 0)
-                    this.checks.checkedFlooring = response.body.flooring;
-                if (response.body.heating.length === 0)
-                    this.checks.checkedHeating = response.body.heating;
-                if (response.body.repair.length === 0)
-                    this.checks.checkedRepair = response.body.repair;
-            },
             fillEstateObject(response) {
-                this.estate.name = response.body.name;
 
-                if (response.body.description === null)
-                    this.estate.description = '';
-                else
-                    this.estate.description = response.body.description;
+                if (response.body.description === null) {
+                    response.body.description = '';
+                }
 
-                this.estate.price = response.body.price;
-                this.estate.city = response.body.city;
-                this.estate.street = response.body.street;
-                this.estate.house = response.body.house;
-                this.estate.floor = response.body.floor;
-                this.estate.flat = response.body.flat;
-                this.estate.rooms = response.body.rooms;
-                this.estate.height = response.body.height;
-                this.estate.areaall = response.body.areaall;
-                this.estate.areakitchen = response.body.areakitchen;
-                this.estate.arearooms = response.body.arearooms;
+                for (let key in response.body) {
+                    if (response.body.hasOwnProperty(key)) {
+                        this.estate[key] = response.body[key];
+                    }
+                }
             }
         },
         mounted() {
@@ -528,7 +463,7 @@
         display: flex;
     }
 
-    .inputs-group > select {
+    .selects {
         flex: 1 1 300px;
         margin: 0 5px;
     }
@@ -569,13 +504,4 @@
         margin-left: 20px;
     }
 
-    select {
-        border-bottom: 0.5px solid rgba(0, 0, 0, 0.87);
-        padding: 8px 8px 8px 0;
-        color: rgba(0, 0, 0, 0.6);
-    }
-
-    option {
-        border: none;
-    }
 </style>

@@ -52,6 +52,10 @@
         --header-height: 70px;
     }
 
+    .primary--text {
+        color: black !important;
+    }
+
     .v-text-field.v-input--is-focused .v-input__slot:after {
         color: var(--header-color);
     }
@@ -96,8 +100,9 @@
         background-color: var(--side-bg-color) !important;
     }
 
-    .theme--light.v-messages {
-        color: #ff1f1f !important;
+    .v-list__tile__content  div.v-list__tile__title {
+         color: black !important;
+         caret-color: black !important;
     }
 
     html,
