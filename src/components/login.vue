@@ -109,7 +109,6 @@
     }
 
     .image {
-        /*background-image: url("../assets/images/estates/estate-3.jpg");*/
         height: 100%;
         background: no-repeat center;
         background-size: cover;

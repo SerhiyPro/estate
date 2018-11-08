@@ -381,6 +381,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -409,6 +412,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -806,43 +811,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'editAndAdd',
     data() {
         return {
+            pageType: this.$route.path.split('/')[2],
             isValid: true,
-            checks: {
-                checkedTypeOfTheHouse: 'Тип будинку',
-                checkedTypeOfRooms: 'Тип кімнат',
-                checkedLayout: 'Планування',
-                checkedFlooring: 'Тип підлоги',
-                checkedFurniture: 'Меблі',
-                checkedHeating: 'Вид опалення',
-                checkedRepair: 'Ремонт'
-            },
             selects: {
                 'housetype': {
-                    items: ['Цегляний', 'Дерев\'яний', 'Панельний']
+                    items: ['Не вказано', 'Цегляний', 'Дерев\'яний', 'Панельний']
                 },
                 'typeOfRooms': {
-                    items: ['Суміжні', 'Роздільні', 'Суміжно-роздільні']
+                    items: ['Не вказано', 'Суміжні', 'Роздільні', 'Суміжно-роздільні']
                 },
                 'layout': {
-                    items: ['Чешка', 'Київка', 'Старий фонд', 'Хрущовка', 'Сталінка', 'Новобудова', 'Особняк', 'Спецпроект', 'Гуртожиток']
+                    items: ['Не вказано', 'Чешка', 'Київка', 'Старий фонд', 'Хрущовка', 'Сталінка', 'Новобудова', 'Особняк', 'Спецпроект', 'Гуртожиток']
                 },
                 'flooring': {
-                    items: ['Ламінат', 'Дерево', 'Паркет', 'Плитка', 'Лінолеум']
+                    items: ['Не вказано', 'Ламінат', 'Дерево', 'Паркет', 'Плитка', 'Лінолеум']
                 },
                 'furniture': {
-                    items: ['Старі меблі', 'Нові меблі']
+                    items: ['Без меблів', 'Старі меблі', 'Нові меблі']
                 },
                 'heating': {
-                    items: ['Без опалення', 'Пічне', 'Централізоване', 'Конвектор', 'АГВ', 'Котельня']
+                    items: ['Не вказано', 'Без опалення', 'Пічне', 'Централізоване', 'Конвектор', 'АГВ', 'Котельня']
                 },
                 'repair': {
-                    items: ['Не потиньковано', 'Від забудовника', 'Нежилий стан', 'Добрий стан', 'Косметичний ремонт', 'Євроремонт', 'Дизайнерський ремонт', 'Частковий']
+                    items: ['Не вказано', 'Не потиньковано', 'Від забудовника', 'Нежилий стан', 'Добрий стан', 'Косметичний ремонт', 'Євроремонт', 'Дизайнерський ремонт', 'Частковий']
                 }
             },
             defaultRealtyUnit: {
@@ -971,13 +991,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         onStart() {
-            // todo change
-            // this.estate = {...this.emptyEstate};
             this.isInit = false;
 
-            if (this.$route.path.split('/')[2] !== 'add') {
+            if (this.pageType !== 'add') {
                 document.title = 'Edit estate';
-                //console.log('editing ' + this.$route.path.split('/')[2]);
                 this.isInit = true;
 
                 this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], {
@@ -987,7 +1004,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     console.log(response.body);
                     this.fillEstateObject(response);
-                    this.fillChecks(response);
                 }).catch(error => {
                     this.$root.callAlert('Неправильна адреса будівлі', 'danger');
                     this.$router.go(-1);
@@ -1002,12 +1018,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         submit() {
-            // todo change the way we get info from selects
             if (this.$refs.form.validate()) {
-                this.checkSelects();
-                if (this.$route.path.split('/')[2] === 'add') this.addEstate();else this.editEstate();
-            } else {
-                // todo alerting user that he entered invalid values
+                if (this.pageType === 'add') this.addEstate();else this.editEstate();
             }
         },
         addEstate() {
@@ -1026,13 +1038,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         editEstate() {
-            this.$http.put(`${this.$root.apiUrl}/realty/` + this.$route.path.split('/')[2], this.estate, {
+            this.$http.put(`${this.$root.apiUrl}/realty/${this.pageType}`, this.estate, {
                 headers: {
                     'Authorization': localStorage.getItem('authorized')
                 }
             }).then(function (response) {
                 // Success
-
                 this.$root.callAlert('Будівля успішно відредагована', 'success');
                 this.$router.push('/estates');
             }).catch(error => {
@@ -1040,47 +1051,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        checkSelects() {
-            let phrase = 'Не вказано';
-            if (this.selects.housetype.items.indexOf(this.checks.checkedTypeOfTheHouse) === -1) this.estate.housetype = phrase;else this.estate.housetype = this.checks.checkedTypeOfTheHouse;
-
-            if (this.selects.typeOfRooms.items.indexOf(this.checks.checkedTypeOfRooms) === -1) this.estate.roomstype = phrase;else this.estate.roomstype = this.checks.checkedTypeOfRooms;
-
-            if (this.selects.layout.items.indexOf(this.checks.checkedLayout) === -1) this.estate.layout = phrase;else this.estate.layout = this.checks.checkedLayout;
-
-            if (this.selects.furniture.items.indexOf(this.checks.checkedFurniture) === -1) this.estate.furniture = 'Без меблів';else this.estate.furniture = this.checks.checkedFurniture;
-
-            if (this.selects.flooring.items.indexOf(this.checks.checkedFlooring) === -1) this.estate.flooring = phrase;else this.estate.flooring = this.checks.checkedFlooring;
-
-            if (this.selects.heating.items.indexOf(this.checks.checkedHeating) === -1) this.estate.heating = phrase;else this.estate.heating = this.checks.checkedHeating;
-
-            if (this.selects.repair.items.indexOf(this.checks.checkedRepair) === -1) this.estate.repair = phrase;else this.estate.repair = this.checks.checkedRepair;
-        },
-        fillChecks(response) {
-            if (response.body.layout.length === 0) this.checks.checkedLayout = response.body.layout;
-            if (response.body.housetype.length === 0) this.checks.checkedTypeOfTheHouse = response.body.housetype;
-            if (response.body.roomstype.length === 0) this.checks.checkedTypeOfRooms = response.body.roomstype;
-            if (response.body.furniture.length === 0) this.checks.checkedFurniture = response.body.furniture;
-            if (response.body.flooring.length === 0) this.checks.checkedFlooring = response.body.flooring;
-            if (response.body.heating.length === 0) this.checks.checkedHeating = response.body.heating;
-            if (response.body.repair.length === 0) this.checks.checkedRepair = response.body.repair;
-        },
         fillEstateObject(response) {
-            this.estate.name = response.body.name;
 
-            if (response.body.description === null) this.estate.description = '';else this.estate.description = response.body.description;
+            if (response.body.description === null) {
+                response.body.description = '';
+            }
 
-            this.estate.price = response.body.price;
-            this.estate.city = response.body.city;
-            this.estate.street = response.body.street;
-            this.estate.house = response.body.house;
-            this.estate.floor = response.body.floor;
-            this.estate.flat = response.body.flat;
-            this.estate.rooms = response.body.rooms;
-            this.estate.height = response.body.height;
-            this.estate.areaall = response.body.areaall;
-            this.estate.areakitchen = response.body.areakitchen;
-            this.estate.arearooms = response.body.arearooms;
+            for (let key in response.body) {
+                if (response.body.hasOwnProperty(key)) {
+                    this.estate[key] = response.body[key];
+                }
+            }
         }
     },
     mounted() {},
@@ -1167,6 +1148,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -1174,6 +1157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'estate',
     data() {
         return {
+            paramsId: this.$route.params.id,
             estates: __WEBPACK_IMPORTED_MODULE_0__assets_images__["a" /* estates */],
             estate: {},
             date: null,
@@ -1182,13 +1166,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         checkValidId() {
-            if (isFinite('0x' + this.$route.params.id)) console.log('is hex');else {
+            if (isFinite('0x' + this.paramsId)) console.log('is hex');else {
                 this.$root.callAlert('Некоректна адреса');
                 this.$router.go(-1);
             }
         },
         fetchDataAboutGivenEstate() {
-            this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.params.id, {
+            this.$http.get(`${this.$root.apiUrl}/realty/${this.paramsId}`, {
                 headers: {
                     'Authorization': localStorage.getItem('authorized')
                 }
@@ -1196,7 +1180,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 // Success
                 this.estate = response.body;
                 this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));
-                // console.log(this.estates);
             }).catch(error => {
                 console.log(error);
                 this.$root.callAlert('Неіснуюча будівля', 'danger');
@@ -1217,6 +1200,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.$root.callAlert('Будівля не була видалена, сталась помилка', 'danger');
                 console.log(error);
             });
+        },
+        goBack() {
+            this.$router.go(-1);
         }
     },
     mounted() {
@@ -1561,6 +1547,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -2656,9 +2646,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('v-app', {
+  return _c('div', [_c('v-layout', {
     attrs: {
-      "id": "inspire"
+      "wrap": "",
+      "align-center": ""
     }
   }, [_c('v-layout', {
     attrs: {
@@ -2685,6 +2676,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('v-text-field', {
+    staticClass: "search",
     attrs: {
       "label": "Пошук"
     },
@@ -2695,7 +2687,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "search"
     }
-  })], 1), _vm._v(" "), _c('v-menu', {
+  }), _vm._v(" "), _c('v-icon', {
+    staticClass: "search-icon"
+  }, [_vm._v("search")])], 1), _vm._v(" "), _c('v-menu', {
+    staticStyle: {
+      "margin-left": "10px"
+    },
     attrs: {
       "bottom": "",
       "left": ""
@@ -2716,11 +2713,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_c('v-list-tile-title', [_vm._v(_vm._s(item.title))])], 1)
-  }))], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c('router-view', {
+  }))], 1)], 1)], 1)], 1), _vm._v(" "), _c('v-container', {
+    attrs: {
+      "fluid": ""
+    }
+  }, [_c('router-view', {
     attrs: {
       "search-value": ['/', '/estates'].includes(_vm.$route.path) ? _vm.search : ''
     }
-  })], 1)
+  })], 1)], 1)], 1)
 },staticRenderFns: []}
 
 /***/ }),
@@ -2728,15 +2729,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('v-layout', {
-    staticStyle: {
-      "margin-top": "20px"
-    }
-  }, [_c('v-flex', {
+  return _c('div', {
+    staticClass: "main"
+  }, [_c('v-layout', [_c('v-flex', {
     attrs: {
       "xs12": "",
-      "sm6": "",
-      "offset-sm3": ""
+      "sm8": "",
+      "md6": "",
+      "offset-sm2": "",
+      "offset-md3": ""
     }
   }, [_c('v-card', [_c('v-img', {
     staticClass: "white--text",
@@ -2759,9 +2760,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "align-end": "",
       "flexbox": ""
     }
-  }, [_c('span', {
-    staticClass: "headline"
-  }, [_vm._v("Квартира " + _vm._s(_vm.estate.flat))])])], 1)], 1)], 1), _vm._v(" "), _c('v-card-title', [_c('div', {
+  }, [_c('v-icon', {
+    staticStyle: {
+      "margin": "20px"
+    },
+    attrs: {
+      "large": "",
+      "color": "white darken-2"
+    },
+    on: {
+      "click": _vm.goBack
+    }
+  }, [_vm._v("\n                                    reply_all\n                                ")])], 1)], 1)], 1)], 1), _vm._v(" "), _c('v-card-title', [_c('div', {
     staticStyle: {
       "padding-left": "5px",
       "font-size": "15px"
@@ -3103,7 +3113,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "top-box"
-  }, [_c('p', [_vm._v("Розширений пошук")])])
+  }, [_c('div', [_c('p', [_vm._v("Розширений пошук")])])])
 }]}
 
 /***/ }),
@@ -3139,9 +3149,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "content"
-  }, [_vm._l((_vm.$root.alerts), function(alert, index) {
+  return _c('div', [_vm._l((_vm.$root.alerts), function(alert, index) {
     return _c('alert', {
       key: index,
       style: ('top:' + (((index)) * 50) + 'px'),
@@ -3150,7 +3158,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "withCloseBtn": true
       }
     }, [_c('span', [_vm._v(_vm._s(alert.text))])])
-  }), _vm._v(" "), _c('router-view')], 2)
+  }), _vm._v(" "), _c('v-app', {
+    attrs: {
+      "id": "inspire"
+    }
+  }, [_c('router-view')], 1)], 2)
 },staticRenderFns: []}
 
 /***/ }),
@@ -3208,7 +3220,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": "/estate/add"
     }
-  }, [_c('strong', [_vm._v("але ви можете додати нову")])])], 1)]) : _c('section', [_vm._v("\n            Завантаження...\n        ")])])], 1)
+  }, [_c('strong', [_vm._v("але ви можете додати нову")])])], 1)]) : _c('section', {
+    staticStyle: {
+      "margin": "20px"
+    }
+  }, [_vm._v("\n            Завантаження...\n        ")])])], 1)
 },staticRenderFns: []}
 
 /***/ }),
@@ -3216,11 +3232,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('v-layout', {
-    staticStyle: {
-      "margin-top": "10px"
-    }
-  }, [_c('v-flex', {
+  return _c('v-layout', [_c('v-flex', {
+    staticClass: "top-margin",
     attrs: {
       "xs12": "",
       "sm8": "",
@@ -3230,6 +3243,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('v-card', [(_vm.isInit) ? _c('v-form', {
     ref: "form",
+    staticStyle: {
+      "padding-top": "12px"
+    },
     attrs: {
       "v-model": _vm.isValid
     },
@@ -3243,7 +3259,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "info-block"
   }, [_c('div', {
     staticClass: "top-box"
-  }, [_c('p', [_vm._v("Основна інформація")])]), _vm._v(" "), _c('v-text-field', {
+  }, [_c('div', [_c('p', [_vm._v("Основна інформація")])])]), _vm._v(" "), _c('v-text-field', {
     attrs: {
       "counter": _vm.defaultRealtyUnit.name.counter,
       "type": _vm.defaultRealtyUnit.name.type,
@@ -3272,59 +3288,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "inputs-group"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedTypeOfTheHouse),
-      expression: "checks.checkedTypeOfTheHouse"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedTypeOfTheHouse", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+  }, [_c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.housetype.items,
+      "label": "Тип будинку"
+    },
+    model: {
+      value: (_vm.estate.housetype),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "housetype", $$v)
+      },
+      expression: "estate.housetype"
     }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
+  }), _vm._v(" "), _c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.typeOfRooms.items,
+      "label": "Тип кімнат"
+    },
+    model: {
+      value: (_vm.estate.roomstype),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "roomstype", $$v)
+      },
+      expression: "estate.roomstype"
     }
-  }, [_vm._v("Тип будинку")]), _vm._v(" "), _vm._l((_vm.selects.housetype.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedTypeOfRooms),
-      expression: "checks.checkedTypeOfRooms"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedTypeOfRooms", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+  }), _vm._v(" "), _c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.layout.items,
+      "label": "Планування"
+    },
+    model: {
+      value: (_vm.estate.layout),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "layout", $$v)
+      },
+      expression: "estate.layout"
     }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
-    }
-  }, [_vm._v("Тип кімнат")]), _vm._v(" "), _vm._l((_vm.selects.typeOfRooms.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2), _vm._v(" "), _c('v-text-field', {
+  }), _vm._v(" "), _c('v-text-field', {
     staticClass: "make-inline half-width",
     attrs: {
       "label": _vm.defaultRealtyUnit.price.label,
@@ -3339,40 +3342,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "estate.price"
     }
-  }), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedLayout),
-      expression: "checks.checkedLayout"
-    }],
-    staticStyle: {
-      "margin-bottom": "19px"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedLayout", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
-    }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
-    }
-  }, [_vm._v("Планування")]), _vm._v(" "), _vm._l((_vm.selects.layout.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2)], 1)], 1), _vm._v(" "), _c('div', {
+  })], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "info-block"
   }, [_c('div', {
     staticClass: "top-box"
-  }, [_c('p', [_vm._v("Адреса")])]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_c('p', [_vm._v("Адреса")])])]), _vm._v(" "), _c('div', {
     staticClass: "inputs-group"
   }, [_c('v-text-field', {
     staticClass: "half-width",
@@ -3451,7 +3425,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "info-block"
   }, [_c('div', {
     staticClass: "top-box"
-  }, [_c('p', [_vm._v("Кімнати")])]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_c('p', [_vm._v("Кімнати")])])]), _vm._v(" "), _c('div', {
     staticClass: "inputs-group"
   }, [_c('v-text-field', {
     staticClass: "half-width",
@@ -3532,116 +3506,61 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "top-box"
-  }, [_c('p', [_vm._v("Додатково")])]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_c('p', [_vm._v("Додатково")])])]), _vm._v(" "), _c('div', {
     staticClass: "inputs-group"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedFurniture),
-      expression: "checks.checkedFurniture"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedFurniture", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
-    }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
-    }
-  }, [_vm._v("Меблі")]), _vm._v(" "), _vm._l((_vm.selects.furniture.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedFlooring),
-      expression: "checks.checkedFlooring"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedFlooring", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
-    }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
-    }
-  }, [_vm._v("Тип підлоги")]), _vm._v(" "), _vm._l((_vm.selects.flooring.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedHeating),
-      expression: "checks.checkedHeating"
-    }],
-    staticStyle: {
-      "margin-top": "30px"
+  }, [_c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.furniture.items,
+      "label": "Умеблювання"
     },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedHeating", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+    model: {
+      value: (_vm.estate.furniture),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "furniture", $$v)
+      },
+      expression: "estate.furniture"
     }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
+  }), _vm._v(" "), _c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.flooring.items,
+      "label": "Тип підлоги"
+    },
+    model: {
+      value: (_vm.estate.flooring),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "flooring", $$v)
+      },
+      expression: "estate.flooring"
     }
-  }, [_vm._v("Вид опалення")]), _vm._v(" "), _vm._l((_vm.selects.heating.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.checks.checkedRepair),
-      expression: "checks.checkedRepair"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.checks, "checkedRepair", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+  }), _vm._v(" "), _c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.heating.items,
+      "label": "Вид опалення"
+    },
+    model: {
+      value: (_vm.estate.heating),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "heating", $$v)
+      },
+      expression: "estate.heating"
     }
-  }, [_c('option', {
-    domProps: {
-      "selected": true
+  }), _vm._v(" "), _c('v-select', {
+    staticClass: "selects",
+    attrs: {
+      "items": _vm.selects.repair.items,
+      "label": "Ремонт"
+    },
+    model: {
+      value: (_vm.estate.repair),
+      callback: function($$v) {
+        _vm.$set(_vm.estate, "repair", $$v)
+      },
+      expression: "estate.repair"
     }
-  }, [_vm._v("Ремонт")]), _vm._v(" "), _vm._l((_vm.selects.repair.items), function(item) {
-    return _c('option', {
-      key: item.id
-    }, [_vm._v(_vm._s(item))])
-  })], 2)])]), _vm._v(" "), (this.$route.path.split('/')[2] === 'add') ? _c('v-btn', {
+  })], 1)]), _vm._v(" "), (this.$route.path.split('/')[2] === 'add') ? _c('v-btn', {
     staticClass: "button-margin",
     attrs: {
       "type": "submit",
@@ -3680,4 +3599,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 ],[39]);
-//# sourceMappingURL=app.1654158984e5bd21bc15.js.map
+//# sourceMappingURL=app.2bcbe38c4a8c8af95dda.js.map
