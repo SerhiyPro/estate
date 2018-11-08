@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <v-layout class="main">
-            <v-flex xs12 sm6 offset-sm3>
+    <div class="main">
+        <v-layout>
+            <v-flex xs12 sm8 md6 offset-sm2 offset-md3>
                 <v-card>
                     <v-img
                             class="white--text"
@@ -11,7 +11,9 @@
                         <v-container fill-height fluid>
                             <v-layout fill-height>
                                 <v-flex xs12 align-end flexbox>
-                                    <span class="headline">Квартира {{  estate.flat  }}</span>
+                                    <v-icon style="margin: 20px" large color="white darken-2" @click="goBack">
+                                        reply_all
+                                    </v-icon>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -74,6 +76,7 @@
         name: 'estate',
         data() {
             return {
+                paramsId: this.$route.params.id,
                 estates,
                 estate: {},
                 date: null,
@@ -82,15 +85,15 @@
         },
         methods: {
             checkValidId() {
-                if (isFinite('0x' + this.$route.params.id))
+                if (isFinite('0x' + this.paramsId))
                     console.log('is hex');
                 else {
-                    this.$root.callAlert ('Некоректна адреса');
+                    this.$root.callAlert('Некоректна адреса');
                     this.$router.go(-1);
                 }
             },
             fetchDataAboutGivenEstate() {
-                this.$http.get(`${this.$root.apiUrl}/realty/` + this.$route.params.id, {
+                this.$http.get(`${this.$root.apiUrl}/realty/${this.paramsId}`, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
                     }
@@ -98,10 +101,9 @@
                     // Success
                     this.estate = response.body;
                     this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));
-                    // console.log(this.estates);
                 }).catch(error => {
                     console.log(error);
-                    this.$root.callAlert ('Неіснуюча будівля', 'danger');
+                    this.$root.callAlert('Неіснуюча будівля', 'danger');
                     this.$router.push('/');
                 });
             },
@@ -113,12 +115,15 @@
                     }
                 }).then(function (response) {
                     // Success
-                    this.$root.callAlert ('Успішно видалено', 'success');
+                    this.$root.callAlert('Успішно видалено', 'success');
                     this.$router.push('/estates');
                 }).catch(error => {
-                    this.$root.callAlert ('Будівля не була видалена, сталась помилка', 'danger');
+                    this.$root.callAlert('Будівля не була видалена, сталась помилка', 'danger');
                     console.log(error)
                 });
+            },
+            goBack() {
+                this.$router.go(-1);
             }
         },
         mounted() {
@@ -140,7 +145,9 @@
         text-align: right;
     }
 
-    .main {
-        margin-top: 20px;
+    @media screen and (min-width: 600px) {
+        .main {
+            margin-top: 20px;
+        }
     }
 </style>

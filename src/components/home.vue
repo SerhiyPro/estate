@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app id="inspire">
+        <v-layout wrap align-center>
             <v-layout row>
                 <v-flex>
                     <v-card-title class="blue header">
@@ -10,11 +10,13 @@
                         <v-spacer></v-spacer>
                         <v-form @click.prevent="">
                             <v-text-field
+                                    class="search"
                                     v-model="search"
                                     label="Пошук"
                             ></v-text-field>
+                            <v-icon class="search-icon">search</v-icon>
                         </v-form>
-                        <v-menu bottom left>
+                        <v-menu bottom left style="margin-left: 10px">
                             <v-btn
                                     slot="activator"
                                     dark
@@ -33,8 +35,10 @@
                     </v-card-title>
                 </v-flex>
             </v-layout>
-        </v-app>
-        <router-view :search-value="['/','/estates'].includes($route.path)? search: ''"></router-view>
+            <v-container fluid >
+                <router-view :search-value="['/','/estates'].includes($route.path)? search: ''"></router-view>
+            </v-container>
+        </v-layout>
     </div>
 </template>
 
@@ -84,7 +88,6 @@
         created() {
         }
 
-
     }
 </script>
 
@@ -94,4 +97,18 @@
         width: 50px;
     }
 
+    .search {
+        position: relative;
+    }
+    @media screen and (max-width: 480px){
+        .search{
+            max-width: 120px;
+        }
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 22px;
+        right: 60px;
+    }
 </style>

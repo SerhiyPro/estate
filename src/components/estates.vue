@@ -34,7 +34,7 @@
                     </router-link>
                 </section>
             </section>
-            <section v-else>
+            <section v-else style="margin: 20px">
                 Завантаження...
             </section>
         </v-layout>

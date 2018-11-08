@@ -1,9 +1,11 @@
 <template>
     <div>
         <section @click="show = !show" class="adv-search">
-            <div class="top-box">
-                <p>Розширений пошук</p>
-            </div>
+                <div class="top-box">
+                    <div>
+                        <p>Розширений пошук</p>
+                    </div>
+                </div>
             <img src="../assets/images/GrayTriangle.png"
                  class="triangle" :class="{reverse: isReversed}">
             <transition name="slide-fade">
@@ -238,12 +240,35 @@
         animation: bounce-in .5s reverse;
     }
 
+    /*.top-box {*/
+    /*left: 50px;*/
+    /*color: var(--border-title-color);*/
+    /*position: absolute;*/
+    /*top: -10px;*/
+    /*background-color: #fafafa;*/
+    /*}*/
+
     .top-box {
-        left: 50px;
-        color: var(--border-title-color);
         position: absolute;
-        top: -10px;
-        background-color: #fff;
+        color: var(--border-title-color);
+        background-color: transparent;
+        left: 0;
+        height: 32px;
+        top: -16px;
+        width: 100%;
+    }
+
+    .top-box div {
+        color: var(--border-title-color);
+        background-color: #fafafa;
+        width: fit-content;
+        margin-left: 50px;
+    }
+
+    @media screen and (max-width: 480px) {
+        .top-box div {
+            margin: 0 auto;
+        }
     }
 
     .top-box p {
@@ -268,7 +293,7 @@
     }
 
     .half-width {
-        flex: 1 1 175px;
+        flex: 1 1 190px;
         margin: 0 5px;
     }
 

@@ -1,11 +1,14 @@
 <template>
-        <div class="content">
-            <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'" :type="alert.type"
-                   :withCloseBtn="true">
-                <span>{{ alert.text }}</span>
-            </alert>
+    <div>
+        <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'"
+        :type="alert.type"
+        :withCloseBtn="true">
+        <span>{{ alert.text }}</span>
+        </alert>
+        <v-app id="inspire">
             <router-view></router-view>
-        </div>
+        </v-app>
+    </div>
 </template>
 
 <script>
@@ -36,6 +39,13 @@
 </script>
 
 <style>
+    html, body {
+        height: 100%;
+    }
+
+    body > div, body > div > div.application, body > div > div > div.application--wrap {
+        min-height: inherit;
+    }
 
     :root {
         --main-bg-color: #fafafa;
@@ -100,9 +110,13 @@
         background-color: var(--side-bg-color) !important;
     }
 
-    .v-list__tile__content  div.v-list__tile__title {
-         color: black !important;
-         caret-color: black !important;
+    .v-list__tile__content div.v-list__tile__title {
+        color: black !important;
+        caret-color: black !important;
+    }
+
+    .v-list__tile--active .v-list__tile__content div.v-list__tile__title {
+        color: #6aa1e3 !important;
     }
 
     html,
@@ -142,5 +156,9 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+    }
+
+    .container {
+        padding: 0 !important;
     }
 </style>

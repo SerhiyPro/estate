@@ -105,14 +105,13 @@
         align-items: center;
         justify-content: center;
         flex-direction: row;
-        height: 100%;
+        height: 100vh;
     }
 
     .image {
         /*background-image: url("../assets/images/estates/estate-3.jpg");*/
         height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background: no-repeat center;
         background-size: cover;
     }
 

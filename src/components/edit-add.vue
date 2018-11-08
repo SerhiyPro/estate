@@ -1,12 +1,15 @@
 <template>
-    <v-layout style="margin-top: 10px">
-        <v-flex xs12 sm8 offset-sm2 lg6 offset-lg3>
+    <v-layout>
+        <v-flex xs12 sm8 offset-sm2 lg6 offset-lg3 class="top-margin">
             <v-card>
-                <v-form v-if="isInit" ref="form" :v-model="isValid" @submit.prevent="submit">
+                <v-form v-if="isInit" ref="form" style="padding-top: 12px;" :v-model="isValid" @submit.prevent="submit">
                     <div class="info-block">
                         <div class="top-box">
-                            <p>Основна інформація</p>
+                            <div>
+                                <p>Основна інформація</p>
+                            </div>
                         </div>
+
                         <v-text-field
                                 v-model="estate.name"
                                 :counter="defaultRealtyUnit.name.counter"
@@ -51,7 +54,9 @@
                     </div>
                     <div class="info-block">
                         <div class="top-box">
-                            <p>Адреса</p>
+                            <div>
+                                <p>Адреса</p>
+                            </div>
                         </div>
                         <div class="inputs-group">
                             <v-text-field
@@ -96,7 +101,9 @@
                     </div>
                     <div class="info-block">
                         <div class="top-box">
-                            <p>Кімнати</p>
+                            <div>
+                                <p>Кімнати</p>
+                            </div>
                         </div>
                         <div class="inputs-group">
                             <v-text-field
@@ -139,7 +146,9 @@
                     </div>
                     <div class="info-block" style="padding-top: 30px; padding-bottom: 30px">
                         <div class="top-box">
-                            <p>Додатково</p>
+                            <div>
+                                <p>Додатково</p>
+                            </div>
                         </div>
                         <div class="inputs-group">
                             <v-select
@@ -458,6 +467,13 @@
 </script>
 
 <style scoped>
+
+    @media screen and (min-width: 600px) {
+        .top-margin {
+            margin-top: 20px;
+        }
+    }
+
     .inputs-group {
         flex-wrap: wrap;
         display: flex;
@@ -475,11 +491,24 @@
     }
 
     .top-box {
-        left: 50px;
-        color: var(--border-title-color);
         position: absolute;
-        top: -10px;
+        left: 0;
+        height: 32px;
+        top: -16px;
+        width: 100%;
+    }
+
+    .top-box div {
+        color: var(--border-title-color);
         background-color: #fff;
+        width: fit-content;
+        margin-left: 50px;
+    }
+
+    @media screen and (max-width: 480px) {
+        .top-box div {
+            margin: 0 auto;
+        }
     }
 
     .top-box p {
