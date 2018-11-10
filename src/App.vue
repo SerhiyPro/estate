@@ -1,9 +1,9 @@
 <template>
     <div>
         <alert v-for="(alert,index) in $root.alerts" :key="index" :style="'top:'+ (((index)) *50) +'px'"
-        :type="alert.type"
-        :withCloseBtn="true">
-        <span>{{ alert.text }}</span>
+               :type="alert.type"
+               :withCloseBtn="true">
+            <span>{{ alert.text }}</span>
         </alert>
         <v-app id="inspire">
             <router-view></router-view>
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 
     import router from './router'
     import alert from './components/alert.vue'
@@ -41,9 +40,15 @@
 <style>
     html, body {
         height: 100%;
+        min-height: 100%;
     }
 
-    body > div, body > div > div.application, body > div > div > div.application--wrap {
+    body > div, body > div > div.application {
+        min-height: inherit;
+    }
+
+    body > div > div.centered-main > div.application--wrap {
+        height: inherit;
         min-height: inherit;
     }
 
@@ -82,12 +87,12 @@
         outline: none;
     }
 
-    .application--wrap .v-text-field__slot > input {
+    .header .theme--light.v-input:not(.v-input--is-disabled) input {
         color: white !important;
     }
 
-    .application--wrap {
-        min-height: unset !important;
+    .header .theme--light.v-input:not(.v-input--is-disabled) label {
+        color: rgba(0, 0, 0, 0.87) !important;
     }
 
     .theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat).success {
@@ -161,4 +166,16 @@
     .container {
         padding: 0 !important;
     }
+
+    .header .v-text-field__slot {
+        flex: unset;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        width: calc(100% - 28px) !important;
+    }
+
+    .v-text-field__slot > label, .v-select__slot > label {
+        color: rgba(140, 140, 140, 1) !important;
+    }
+
 </style>

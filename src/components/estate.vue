@@ -1,5 +1,6 @@
 <template>
     <div class="main">
+        <top-progress :progress="$root.loader.progress" :bar-color="$root.loader.color" v-if="$root.loader.show"></top-progress>
         <v-layout>
             <v-flex xs12 sm8 md6 offset-sm2 offset-md3>
                 <v-card>
@@ -71,16 +72,18 @@
 
 <script>
     import {estates} from "../assets/images";
+    import TopProgress from "./top-progress";
 
     export default {
         name: 'estate',
+        components: {TopProgress},
         data() {
             return {
                 paramsId: this.$route.params.id,
                 estates,
                 estate: {},
                 date: null,
-                dialog: false
+                dialog: false,
             }
         },
         methods: {
@@ -93,6 +96,8 @@
                 }
             },
             fetchDataAboutGivenEstate() {
+                this.$root.progress('start');
+
                 this.$http.get(`${this.$root.apiUrl}/realty/${this.paramsId}`, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
@@ -101,10 +106,12 @@
                     // Success
                     this.estate = response.body;
                     this.date = response.body.createdAt.slice(0, response.body.createdAt.indexOf(' '));
+                    this.$root.progress('done');
                 }).catch(error => {
                     console.log(error);
                     this.$root.callAlert('Неіснуюча будівля', 'danger');
                     this.$router.push('/');
+                    this.$root.progress('');
                 });
             },
             deleteEstate() {
@@ -148,6 +155,12 @@
     @media screen and (min-width: 600px) {
         .main {
             margin-top: 20px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .v-btn {
+            padding: 0 8px;
         }
     }
 </style>

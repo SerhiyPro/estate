@@ -1,5 +1,6 @@
 <template>
     <div class="centered-main image" :style="{'background-image': `url(${estates[3]})`}">
+        <top-progress :progress="$root.loader.progress" :bar-color="$root.loader.color" v-if="$root.loader.show"></top-progress>
         <v-layout>
             <v-flex xs12 sm6 offset-sm3 md4 offset-md4>
                 <v-card class="centered-card" style="min-width: 320px">
@@ -40,9 +41,11 @@
 
 <script>
     import {estates} from "../assets/images";
+    import TopProgress from "./top-progress";
 
     export default {
         name: "Login",
+        components: {TopProgress},
         data() {
             return {
                 estates,
@@ -66,6 +69,8 @@
         methods: {
             submit() {
                 if (this.$refs.form.validate()) {
+                    this.$root.progress('start');
+
                     localStorage.removeItem('authorized');
                     let auth = 'Basic ' + new Buffer(this.authorization.login + ':' + this.authorization.pass).toString('base64');
                     this.$http.get(`${this.$root.apiUrl}/realty`, {
@@ -75,9 +80,11 @@
                     }).then(function (response) {
                         // Success
                         localStorage.setItem('authorized', auth);
+                        this.$root.progress('done');
                         this.$router.push('/');
                     }).catch(error => {
                         this.$root.callAlert('Неправильний логін чи пароль', 'danger');
+                        this.$root.progress('');
                     });
                 }
                 else {

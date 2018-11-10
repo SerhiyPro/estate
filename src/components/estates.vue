@@ -1,5 +1,6 @@
 <template>
     <div>
+        <top-progress :progress="$root.loader.progress" :bar-color="$root.loader.color" v-if="$root.loader.show"></top-progress>
         <advanced-search v-on:advSearch="advancedSearch"></advanced-search>
         <v-layout>
             <section v-if="loaded" style="width: 100%">
@@ -44,9 +45,10 @@
 <script>
     import advancedSearch from './advSearch';
     import {estates} from "../assets/images";
+    import TopProgress from "./top-progress";
 
     export default {
-        components: {advancedSearch},
+        components: {advancedSearch, TopProgress},
         name: 'estates',
         props: ['searchValue'],
         data() {
@@ -62,6 +64,8 @@
         },
         methods: {
             fetchTheData() {
+                this.$root.progress('start');
+
                 this.$http.get(`${this.$root.apiUrl}/realty`, {
                     headers: {
                         'Authorization': localStorage.getItem('authorized'),
@@ -71,10 +75,12 @@
 
                     this.estates = response.data.list;
                     this.estatesAreFetched = true;
+                    this.$root.progress('done');
                     // console.log(this.estates); // to check whether data was correct
                 }).catch(error => {
                     console.log(error);
                     this.$root.callAlert('Проблема з\'єднання з сервером', 'danger');
+                    this.$root.progress('');
                 }).finally(() => {
                     this.loaded = true;
                 });
@@ -122,7 +128,6 @@
                     });
                 }
                 return estates;
-
             }
         },
         watch: {

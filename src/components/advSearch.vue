@@ -6,8 +6,9 @@
                         <p>Розширений пошук</p>
                     </div>
                 </div>
-            <img src="../assets/images/GrayTriangle.png"
-                 class="triangle" :class="{reverse: isReversed}">
+            <!--<img src="../assets/images/GrayTriangle.png"-->
+                 <!--class="triangle" :class="{reverse: isReversed}">-->
+            <v-icon class="triangle" :class="{reverse: isReversed}">arrow_drop_down</v-icon>
             <transition name="slide-fade">
                 <section @click.stop="" v-if="show" class="internal-block" style="cursor: auto;">
                     <div class="info-block">
@@ -213,13 +214,19 @@
         transform: scaleY(-1);
     }
 
-    @media screen and (min-width: 480px) {
+    .triangle {
+        display: block;
+        position: absolute;
+        /*height: 25px;*/
+        /*width: 25px;*/
+        font-size: 35px;
+        top: -10px;
+        right: 100px;
+    }
+
+    @media screen and (max-width: 480px) {
         .triangle {
-            display: block;
-            height: 25px;
-            position: absolute;
-            top: -10px;
-            right: 100px;
+            display: none;
         }
     }
 
@@ -239,14 +246,6 @@
     .bounce-leave-active {
         animation: bounce-in .5s reverse;
     }
-
-    /*.top-box {*/
-    /*left: 50px;*/
-    /*color: var(--border-title-color);*/
-    /*position: absolute;*/
-    /*top: -10px;*/
-    /*background-color: #fafafa;*/
-    /*}*/
 
     .top-box {
         position: absolute;

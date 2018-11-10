@@ -8,7 +8,7 @@
                             <img class="logo" src="../assets/images/logo.png">
                         </router-link>
                         <v-spacer></v-spacer>
-                        <v-form @click.prevent="">
+                        <v-form @click.prevent="" style="position: relative;">
                             <v-text-field
                                     class="search"
                                     v-model="search"
@@ -97,9 +97,6 @@
         width: 50px;
     }
 
-    .search {
-        position: relative;
-    }
     @media screen and (max-width: 480px){
         .search{
             max-width: 120px;
@@ -109,6 +106,6 @@
     .search-icon {
         position: absolute;
         top: 22px;
-        right: 60px;
+        right: 0;
     }
 </style>

@@ -6,7 +6,7 @@
                         v-for="(item,i) in items"
                         :key="i"
                         :src="item.photo"
-                ></v-carousel-item>
+                ><h1 class="carousel-text">{{item.title}}</h1></v-carousel-item>
             </v-carousel>
         </section>
 
@@ -105,16 +105,20 @@
                 estatesAreFetched: false,
                 items: [
                     {
-                        photo: carousel1
+                        photo: carousel1,
+                        title: 'Елітна нерухомість з усього світу'
                     },
                     {
-                        photo: carousel2
+                        photo: carousel2,
+                        title: 'Гарантія молодим родинам на щасливе майбутнє'
                     },
                     {
-                        photo: carousel3
+                        photo: carousel3,
+                        title: 'Гарантована якість, підтверджена експертами'
                     },
                     {
-                        photo: carousel4
+                        photo: carousel4,
+                        title: 'Найкращі будинки за найкращою ціною'
                     }
                 ],
                 partnerLogos,
@@ -182,6 +186,14 @@
     .full-page {
         height: calc(100vh - var(--header-height));
         min-height: 400px;
+    }
+
+    .carousel-text {
+        text-align: center;
+        font-family: Courier sans-serif;
+        color: rgba(255, 255, 255, 0.9);
+        padding-top: 25px;
+        font-size: 32px
     }
 
     .estate-card {

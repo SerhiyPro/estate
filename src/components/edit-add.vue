@@ -1,5 +1,6 @@
 <template>
     <v-layout>
+        <top-progress :progress="$root.loader.progress" :bar-color="$root.loader.color" v-if="$root.loader.show"></top-progress>
         <v-flex xs12 sm8 offset-sm2 lg6 offset-lg3 class="top-margin">
             <v-card>
                 <v-form v-if="isInit" ref="form" style="padding-top: 12px;" :v-model="isValid" @submit.prevent="submit">
@@ -188,9 +189,11 @@
 </template>
 
 <script>
+    import TopProgress from "./top-progress";
 
     export default {
         name: 'editAndAdd',
+        components: {TopProgress},
         data() {
             return {
                 pageType: this.$route.path.split('/')[2],
@@ -379,6 +382,8 @@
                 this.isInit = false;
 
                 if (this.pageType !== 'add') {
+                    this.$root.progress('start');
+
                     document.title = 'Edit estate';
                     this.isInit = true;
 
@@ -389,10 +394,12 @@
                     }).then(function (response) {
                         console.log(response.body);
                         this.fillEstateObject(response);
+                        this.$root.progress('done');
                     }).catch(error => {
                         this.$root.callAlert('Неправильна адреса будівлі', 'danger');
                         this.$router.go(-1);
                         console.log(error);
+                        this.$root.progress('');
                     });
                 }
                 else {

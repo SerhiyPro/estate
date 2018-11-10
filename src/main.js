@@ -52,7 +52,13 @@ new Vue({
     data: {
         title: 'This will be the title',
         apiUrl:'http://lab.kids-lu-server.xyz/api/v1',
-        alerts: []
+        alerts: [],
+        loader: {
+            progress: 0,
+            timeId: null,
+            show: false,
+            color: '#73AF55'
+        }
     },
     template: '<App/>',
     components: {
@@ -70,6 +76,33 @@ new Vue({
                 }, 5000)
             });
 
-        }
+        },
+        progress(status) {
+            let n = 0;
+            this.loader.color = '#73AF55';
+            clearTimeout(this.loader.timeId);
+            if (status === 'start') {
+                this.loader.show = true;
+                this.loader.progress = 1;
+                this.loader.timeId = setInterval(() => {
+                    n += 1;
+                    this.loader.progress += 3 / n ** (1 / 2);
+                    if (this.loader.progress > 90) {
+                        clearTimeout(this.loader.timeId);
+                    }
+                }, 100)
+            } else if (status === 'done') {
+                setTimeout(() => {
+                    this.loader.show = false
+                }, 1000);
+                this.loader.progress = 100
+            } else {
+                setTimeout(() => {
+                    this.loader.show = false
+                }, 1000);
+                this.loader.progress = 100;
+                this.loader.color = '#ff0300'
+            }
+        },
     }
 });
